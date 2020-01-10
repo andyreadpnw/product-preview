@@ -1,0 +1,11 @@
+.ProductCard-img {
+  height: auto;
+  height: 300px;
+  width: auto;
+  width: 300px;
+}
+
+.CardItem-main-card {
+  width: 320px;
+  height: 515px;
+}
