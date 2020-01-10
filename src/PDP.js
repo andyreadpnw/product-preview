@@ -15,7 +15,35 @@ export class PDP extends Component {
       fabrication,
       style_type
     } = this.props.product;
-    return <div>{id}</div>;
+    return (
+      <div>
+        <header>
+          <hgroup>
+            <h1>{name}</h1>
+            <h4>Product ID: {parent_id}</h4>
+            <img src={product_main_image}></img>
+          </hgroup>
+        </header>
+
+        <section>
+          <p>Summary Copy: {product_copy}</p>
+          <li>Department: {department}</li>
+          <li>Style ID: {style_id}</li>
+          <li>Color ID: {color_id}</li>
+          <li>Size Type: {style_type}</li>
+
+          <details>
+            <summary>Product Features</summary>
+            <ul>
+              <li>Fit: {fit}</li>
+              <li>Fabrication: {fabrication}</li>
+            </ul>
+          </details>
+
+          <button>Log a Ticket</button>
+        </section>
+      </div>
+    );
   }
 }
 
