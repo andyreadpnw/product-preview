@@ -90,7 +90,9 @@ class MainArea extends Component {
     return (
       <Container fluid>
         <Row>{productCards}</Row>
-        <Row>{productLogCards}</Row>
+        <Row>
+          <Ticket data={this.state.ticketsArr} />
+        </Row>
       </Container>
     );
   }
