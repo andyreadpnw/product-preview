@@ -1,15 +1,27 @@
 import React, { Component } from "react";
-import ReactTable from "react-table";
 import DataTable from "react-data-table-component";
+import Popup from "reactjs-popup";
+import Modal from "react-awesome-modal";
 
 export class Ticket extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      visible: false
+    };
   }
-  // handleClick(e) {
-  //   e.preventDefault();
-  //   console.log("The link was clicked.");
-  // }
+
+  openModal() {
+    this.setState({
+      visible: true
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      visible: false
+    });
+  }
 
   handleClick = () => {
     console.log("potato");
@@ -17,6 +29,7 @@ export class Ticket extends Component {
 
   handleRowClicked = row => {
     console.log(`${row.id} was clicked!`);
+    this.openModal();
   };
 
   render() {
@@ -132,8 +145,6 @@ export class Ticket extends Component {
 
     return (
       <div>
-        {/* {id} */}
-        {/* <ReactTable data={this.props.data} columns={columns} /> */}
         <DataTable
           title="Product Logs"
           columns={columns}
@@ -142,6 +153,21 @@ export class Ticket extends Component {
           onClick={this.handleClick}
           pagination
         />
+        <Modal
+          visible={this.state.visible}
+          width="400"
+          height="300"
+          effect="fadeInUp"
+          onClickAway={() => this.closeModal()}
+        >
+          <div>
+            <h1>Title</h1>
+            <p>Some Contents</p>
+            <a href="javascript:void(0);" onClick={() => this.closeModal()}>
+              Close
+            </a>
+          </div>
+        </Modal>
       </div>
     );
   }
