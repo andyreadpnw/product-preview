@@ -7,7 +7,19 @@ export class Ticket extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      visible: false
+      visible: false,
+      logSelected: 1,
+      status: "none",
+      priority: "none",
+      issue_type: "none",
+      issue_class: "none",
+      site: "none",
+      division: "none",
+      environment: "none",
+      log_body: "none",
+      assigned: "none",
+      cc: "none",
+      due_date: "none"
     };
   }
 
@@ -29,6 +41,21 @@ export class Ticket extends Component {
 
   handleRowClicked = row => {
     console.log(`${row.id} was clicked!`);
+    console.log(`${row.log_body}`);
+    this.setState({
+      logSelected: row.id,
+      status: row.status,
+      priority: row.priority,
+      issue_type: row.issue_type,
+      issue_class: row.issue_class,
+      site: row.site,
+      division: row.division,
+      environment: row.environment,
+      log_body: row.log_body,
+      assigned: row.assigned,
+      cc: row.cc,
+      due_date: row.due_date
+    });
     this.openModal();
   };
 
@@ -161,8 +188,8 @@ export class Ticket extends Component {
           onClickAway={() => this.closeModal()}
         >
           <div>
-            <h1>Title</h1>
-            <p>Some Contents</p>
+            <h1>{this.state.logSelected}</h1>
+            <p>{this.state.log_body}</p>
             <a href="javascript:void(0);" onClick={() => this.closeModal()}>
               Close
             </a>
