@@ -8,6 +8,7 @@ export class Ticket extends Component {
     super(props);
     this.state = {
       visible: false,
+      editVisible: false,
       logSelected: 1,
       status: "none",
       priority: "none",
@@ -34,6 +35,45 @@ export class Ticket extends Component {
       visible: false
     });
   }
+
+  closeEditModal() {
+    this.setState({
+      editVisible: false
+    });
+  }
+
+  handleNewTicket() {
+    console.log("new ticket");
+    this.setState({
+      editVisible: true,
+      logSelected: 1,
+      status: "none",
+      priority: "none",
+      issue_type: "none",
+      issue_class: "none",
+      site: "none",
+      division: "none",
+      environment: "none",
+      log_body: "none",
+      assigned: "none",
+      cc: "none",
+      due_date: "none"
+    });
+  }
+
+  openEditModal() {
+    this.setState({
+      visible: false,
+      editVisible: true
+    });
+  }
+
+  updateInputValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      log_body: newValue
+    });
+  };
 
   handleClick = () => {
     console.log("potato");
@@ -190,11 +230,42 @@ export class Ticket extends Component {
           <div>
             <h1>{this.state.logSelected}</h1>
             <p>{this.state.log_body}</p>
+            <a href="javascript:void(0);" onClick={() => this.openEditModal()}>
+              Edit
+            </a>
             <a href="javascript:void(0);" onClick={() => this.closeModal()}>
               Close
             </a>
           </div>
         </Modal>
+        <Modal
+          visible={this.state.editVisible}
+          width="400"
+          height="300"
+          effect="fadeInUp"
+          onClickAway={() => this.closeEditModal()}
+        >
+          <div>
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.log_body}
+              name="logSelected"
+              placeholder={this.state.log_body}
+              onChange={this.updateInputValue}
+            />
+            <h1>{this.state.logSelected}</h1>
+            <p>{this.state.log_body}</p>
+            <a href="javascript:void(0);" onClick={() => this.closeEditModal()}>
+              Close
+            </a>
+          </div>
+        </Modal>
+        <input
+          type="button"
+          value="Log a New Ticket"
+          onClick={() => this.handleNewTicket()}
+        />
       </div>
     );
   }
