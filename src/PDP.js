@@ -39,8 +39,6 @@ export class PDP extends Component {
               <li>Fabrication: {fabrication}</li>
             </ul>
           </details>
-
-          <button>Log a Ticket</button>
         </section>
       </div>
     );

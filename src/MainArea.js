@@ -64,14 +64,6 @@ class MainArea extends Component {
   }
 
   render() {
-    let productLogCards = this.state.ticketsArr.map(productlog => {
-      return (
-        <Col sm="4">
-          {this.state.isProductClicked && <Ticket productlog={productlog} />}
-        </Col>
-      );
-    });
-
     let productCards = this.state.productsArr.map(product => {
       return (
         <Col sm="4">
@@ -91,7 +83,10 @@ class MainArea extends Component {
       <Container fluid>
         <Row>{productCards}</Row>
         <Row>
-          <Ticket data={this.state.ticketsArr} />
+          <Ticket
+            data={this.state.ticketsArr}
+            product={this.state.productsArr}
+          />
         </Row>
       </Container>
     );

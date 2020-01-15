@@ -43,10 +43,10 @@ export class Ticket extends Component {
   }
 
   handleNewTicket() {
-    console.log("new ticket");
+    console.log(this.props.product[0].id);
     this.setState({
       editVisible: true,
-      logSelected: 1,
+      logSelected: 0,
       status: "none",
       priority: "none",
       issue_type: "none",
@@ -68,10 +68,94 @@ export class Ticket extends Component {
     });
   }
 
-  updateInputValue = e => {
+  updateLogBodyValue = e => {
     const newValue = e.target.value;
     this.setState({
       log_body: newValue
+    });
+  };
+
+  updateDivisionValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      division: newValue
+    });
+  };
+
+  updateSiteValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      site: newValue
+    });
+  };
+
+  updateIssueClassValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      issue_class: newValue
+    });
+  };
+
+  updateIssueTypeValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      issue_type: newValue
+    });
+  };
+
+  updateIssueClassValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      issue_class: newValue
+    });
+  };
+
+  updateIssueClassValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      issue_class: newValue
+    });
+  };
+
+  updateEnvironmentValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      environment: newValue
+    });
+  };
+
+  updateStatusValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      status: newValue
+    });
+  };
+
+  updatePriorityValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      priority: newValue
+    });
+  };
+
+  updateAssignedValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      assigned: newValue
+    });
+  };
+
+  updateCCValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      cc: newValue
+    });
+  };
+
+  updateDueDateValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      due_date: newValue
     });
   };
 
@@ -99,10 +183,80 @@ export class Ticket extends Component {
     this.openModal();
   };
 
+  submitLog = id => {
+    console.log("submitted");
+
+    if (this.state.logSelected !== 0) {
+      console.log("PATCH");
+      fetch("http://localhost:3000/product_logs" + "/" + id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          status: this.state.status,
+          priority: this.state.priority,
+          issue_type: this.state.issue_type,
+          issue_class: this.state.issue_class,
+          site: this.state.site,
+          division: this.state.division,
+          environment: this.state.environment,
+          log_body: this.state.log_body,
+          assigned: this.state.assigned,
+          cc: this.state.cc,
+          due_date: this.state.due_date
+        })
+      }).then(function(resp) {
+        if (Math.floor(resp.status / 200) === 1) {
+          console.log("Great ");
+        } else {
+          console.log("ERROR", resp);
+        }
+      });
+      console.log("here");
+    } else {
+      console.log("POST");
+      fetch("http://localhost:3000/product_logs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json"
+        },
+        body: JSON.stringify({
+          status: this.state.status,
+          priority: this.state.priority,
+          issue_type: this.state.issue_type,
+          issue_class: this.state.issue_class,
+          site: this.state.site,
+          division: this.state.division,
+          environment: this.state.environment,
+          log_body: this.state.log_body,
+          assigned: this.state.assigned,
+          cc: this.state.cc,
+          due_date: this.state.due_date,
+          color_id: this.props.product[0].color_id,
+          department: this.props.product[0].department,
+          fabrication: this.props.product[0].fabrication,
+          fit: this.props.product[0].fit,
+          name: this.props.product[0].name,
+          parent_id: this.props.product[0].parent_id,
+          product_copy: this.props.product[0].product_copy,
+          product_id: this.props.product[0].id,
+          style_id: this.props.product[0].style_id
+        })
+      }).then(function(resp) {
+        if (Math.floor(resp.status / 200) === 1) {
+          console.log("Great ");
+        } else {
+          console.log("ERROR", resp);
+        }
+      });
+    }
+  };
+
   render() {
     console.log(this.props.data);
-
-    const Button = () => <button type="button">Edit</button>;
 
     const data = this.props.data;
 
@@ -241,21 +395,114 @@ export class Ticket extends Component {
         <Modal
           visible={this.state.editVisible}
           width="400"
-          height="300"
+          height="600"
           effect="fadeInUp"
           onClickAway={() => this.closeEditModal()}
         >
           <div>
+            <h1>{this.state.logSelected}</h1>
             <input
               type="text"
               className="form-control"
               value={this.state.log_body}
-              name="logSelected"
+              name="logBody"
               placeholder={this.state.log_body}
-              onChange={this.updateInputValue}
+              onChange={this.updateLogBodyValue}
             />
-            <h1>{this.state.logSelected}</h1>
-            <p>{this.state.log_body}</p>
+
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.status}
+              name="status"
+              placeholder={this.state.status}
+              onChange={this.updateStatusValue}
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.priority}
+              name="priority"
+              placeholder={this.state.priority}
+              onChange={this.updatePriorityValue}
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.issue_type}
+              name="issue_type"
+              placeholder={this.state.issue_type}
+              onChange={this.updateIssueTypeValue}
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.issue_class}
+              name="issue_class"
+              placeholder={this.state.issue_class}
+              onChange={this.updateIssueClassValue}
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.site}
+              name="site"
+              placeholder={this.state.site}
+              onChange={this.updateSiteValue}
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.division}
+              name="division"
+              placeholder={this.state.division}
+              onChange={this.updateDivisionValue}
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.environment}
+              name="environment"
+              placeholder={this.state.environment}
+              onChange={this.updateEnvironmentValue}
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.assigned}
+              name="assigned"
+              placeholder={this.state.assigned}
+              onChange={this.updateAssignedValue}
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.cc}
+              name="cc"
+              placeholder={this.state.cc}
+              onChange={this.updateCCValue}
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.due_date}
+              name="due_date"
+              placeholder={this.state.due_date}
+              onChange={this.updateDueDateValue}
+            />
+
+            <button onClick={() => this.submitLog(this.state.logSelected)}>
+              Submit
+            </button>
             <a href="javascript:void(0);" onClick={() => this.closeEditModal()}>
               Close
             </a>
