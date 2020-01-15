@@ -49,6 +49,14 @@ class MainArea extends Component {
     this.setState({
       productsArr: this.state.productsArr.filter(product => product.id !== id)
     });
+    fetch("http://localhost:3000/products" + "/" + id, {
+      method: "delete"
+    })
+      .then(response => response.json())
+      .then(json => console.log(json.message))
+      .catch(err => {
+        console.error(err);
+      });
   }
 
   enterProduct(id) {
@@ -83,10 +91,12 @@ class MainArea extends Component {
       <Container fluid>
         <Row>{productCards}</Row>
         <Row>
-          <Ticket
-            data={this.state.ticketsArr}
-            product={this.state.productsArr}
-          />
+          {this.state.isProductClicked && (
+            <Ticket
+              data={this.state.ticketsArr}
+              product={this.state.productsArr}
+            />
+          )}
         </Row>
       </Container>
     );

@@ -36,6 +36,22 @@ export class Ticket extends Component {
     });
   }
 
+  deleteModal(id) {
+    console.log(id);
+    this.setState({
+      visible: false
+    });
+    fetch("http://localhost:3000/product_logs" + "/" + id, {
+      method: "delete"
+    })
+      .then(response => response.json())
+      .then(json => console.log(json.message))
+      .catch(err => {
+        console.error(err);
+      });
+    console.log("deleted");
+  }
+
   closeEditModal() {
     this.setState({
       editVisible: false
@@ -377,18 +393,37 @@ export class Ticket extends Component {
         <Modal
           visible={this.state.visible}
           width="400"
-          height="300"
+          height="600"
           effect="fadeInUp"
           onClickAway={() => this.closeModal()}
         >
           <div>
-            <h1>{this.state.logSelected}</h1>
-            <p>{this.state.log_body}</p>
+            <h1>{this.props.product[0].name}</h1>
+            <p>ID: {this.state.logSelected}</p>
+            <p>Status: {this.state.status}</p>
+            <p>Priority: {this.state.priority}</p>
+            <p>Issue Class: {this.state.issue_class}</p>
+            <p>Issue Type: {this.state.issue_type}</p>
+            <p>Site: {this.state.site}</p>
+            <p>Division: {this.state.division}</p>
+            <p>Environment: {this.state.environment}</p>
+            <p>Action Requested: {this.state.log_body}</p>
+            <p>Assigned: {this.state.assigned}</p>
+            <p>CC: {this.state.cc}</p>
+            <p>Date Requested: {this.state.due_date}</p>
             <a href="javascript:void(0);" onClick={() => this.openEditModal()}>
               Edit
             </a>
+            <br></br>
             <a href="javascript:void(0);" onClick={() => this.closeModal()}>
               Close
+            </a>
+            <br></br>
+            <a
+              href="javascript:void(0);"
+              onClick={() => this.deleteModal(this.state.logSelected)}
+            >
+              Delete
             </a>
           </div>
         </Modal>
