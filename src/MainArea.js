@@ -3,6 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 import ProductCard from "./ProductCard";
 import PDP from "./PDP";
 import Ticket from "./Ticket";
+import Tickets from "./Tickets";
 
 class MainArea extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class MainArea extends Component {
       productsArr: [{ id: 1 }],
       isProductClicked: false,
       isEmptyState: true,
-      ticketsArr: [{ id: 1 }]
+      ticketsArr: [{ id: 1 }],
+      allTicketsClicked: false
     };
   }
 
@@ -93,6 +95,12 @@ class MainArea extends Component {
         <Row>
           {this.state.isProductClicked && (
             <Ticket
+              data={this.state.ticketsArr}
+              product={this.state.productsArr}
+            />
+          )}
+          {this.state.allTicketsClicked && (
+            <Tickets
               data={this.state.ticketsArr}
               product={this.state.productsArr}
             />

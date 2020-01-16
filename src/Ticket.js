@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DataTable from "react-data-table-component";
-import Popup from "reactjs-popup";
 import Modal from "react-awesome-modal";
 
 export class Ticket extends Component {
@@ -20,7 +19,8 @@ export class Ticket extends Component {
       log_body: "none",
       assigned: "none",
       cc: "none",
-      due_date: "none"
+      due_date: "none",
+      data: this.props.data
     };
   }
 
@@ -393,7 +393,7 @@ export class Ticket extends Component {
         <Modal
           visible={this.state.visible}
           width="400"
-          height="600"
+          height="650"
           effect="fadeInUp"
           onClickAway={() => this.closeModal()}
         >
@@ -411,18 +411,15 @@ export class Ticket extends Component {
             <p>Assigned: {this.state.assigned}</p>
             <p>CC: {this.state.cc}</p>
             <p>Date Requested: {this.state.due_date}</p>
-            <a href="javascript:void(0);" onClick={() => this.openEditModal()}>
+            <a href="" onClick={() => this.openEditModal()}>
               Edit
             </a>
             <br></br>
-            <a href="javascript:void(0);" onClick={() => this.closeModal()}>
+            <a href="" onClick={() => this.closeModal()}>
               Close
             </a>
             <br></br>
-            <a
-              href="javascript:void(0);"
-              onClick={() => this.deleteModal(this.state.logSelected)}
-            >
+            <a href="" onClick={() => this.deleteModal(this.state.logSelected)}>
               Delete
             </a>
           </div>
@@ -430,21 +427,13 @@ export class Ticket extends Component {
         <Modal
           visible={this.state.editVisible}
           width="400"
-          height="600"
+          height="850"
           effect="fadeInUp"
           onClickAway={() => this.closeEditModal()}
         >
           <div>
-            <h1>{this.state.logSelected}</h1>
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.log_body}
-              name="logBody"
-              placeholder={this.state.log_body}
-              onChange={this.updateLogBodyValue}
-            />
-
+            <h1>Log ID:{this.state.logSelected}</h1>
+            Status:
             <input
               type="text"
               className="form-control"
@@ -453,7 +442,7 @@ export class Ticket extends Component {
               placeholder={this.state.status}
               onChange={this.updateStatusValue}
             />
-
+            Priority:
             <input
               type="text"
               className="form-control"
@@ -462,7 +451,7 @@ export class Ticket extends Component {
               placeholder={this.state.priority}
               onChange={this.updatePriorityValue}
             />
-
+            Issut Type:
             <input
               type="text"
               className="form-control"
@@ -471,7 +460,7 @@ export class Ticket extends Component {
               placeholder={this.state.issue_type}
               onChange={this.updateIssueTypeValue}
             />
-
+            Issue Class:
             <input
               type="text"
               className="form-control"
@@ -480,7 +469,7 @@ export class Ticket extends Component {
               placeholder={this.state.issue_class}
               onChange={this.updateIssueClassValue}
             />
-
+            Site:
             <input
               type="text"
               className="form-control"
@@ -489,7 +478,7 @@ export class Ticket extends Component {
               placeholder={this.state.site}
               onChange={this.updateSiteValue}
             />
-
+            Division:
             <input
               type="text"
               className="form-control"
@@ -498,7 +487,7 @@ export class Ticket extends Component {
               placeholder={this.state.division}
               onChange={this.updateDivisionValue}
             />
-
+            Environment:
             <input
               type="text"
               className="form-control"
@@ -507,7 +496,16 @@ export class Ticket extends Component {
               placeholder={this.state.environment}
               onChange={this.updateEnvironmentValue}
             />
-
+            Request:{" "}
+            <input
+              type="text"
+              className="form-control"
+              value={this.state.log_body}
+              name="logBody"
+              placeholder={this.state.log_body}
+              onChange={this.updateLogBodyValue}
+            />
+            Assigned:
             <input
               type="text"
               className="form-control"
@@ -516,7 +514,7 @@ export class Ticket extends Component {
               placeholder={this.state.assigned}
               onChange={this.updateAssignedValue}
             />
-
+            CC:
             <input
               type="text"
               className="form-control"
@@ -525,7 +523,7 @@ export class Ticket extends Component {
               placeholder={this.state.cc}
               onChange={this.updateCCValue}
             />
-
+            Due Date:
             <input
               type="text"
               className="form-control"
@@ -534,7 +532,6 @@ export class Ticket extends Component {
               placeholder={this.state.due_date}
               onChange={this.updateDueDateValue}
             />
-
             <button onClick={() => this.submitLog(this.state.logSelected)}>
               Submit
             </button>

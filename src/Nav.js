@@ -8,6 +8,7 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
+import Tickets from "./Tickets";
 
 export default class TopNav extends React.Component {
   constructor(props) {
