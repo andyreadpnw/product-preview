@@ -24,8 +24,8 @@ class Login extends React.Component {
     api.auth.login(this.state.fields).then(res => {
       if (!res.error) {
         const updatedState = { ...this.state.auth, user: res };
-        console.log(this.props);
         this.props.onLogin(res);
+        console.log(this.state.error);
       } else {
         this.setState({ error: true });
       }

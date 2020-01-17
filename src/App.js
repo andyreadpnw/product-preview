@@ -31,10 +31,11 @@ class App extends Component {
   }
 
   login = data => {
-    console.log("here");
     const updatedState = { ...this.state.auth, user: data };
     localStorage.setItem("token", data.jwt);
-    this.setState({ auth: updatedState }, console.log(this.state.auth));
+    this.setState({ auth: updatedState }, () => {
+      console.log(this.state.auth);
+    });
   };
 
   logout = () => {
@@ -46,8 +47,14 @@ class App extends Component {
     return (
       <div className="App">
         <TopNav currentUser={this.state.auth.user} />
-        <Login onLogin={this.login} />
         <BrowserRouter>
+          <Route path="/">
+            <Redirect to="/login" />
+          </Route>
+          <Route
+            path="/login"
+            render={props => <Login {...props} onLogin={this.login} />}
+          />
           <Route path="/home" component={MainArea} />
         </BrowserRouter>
       </div>
