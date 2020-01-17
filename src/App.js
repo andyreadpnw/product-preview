@@ -48,14 +48,14 @@ class App extends Component {
       <div className="App">
         <TopNav currentUser={this.state.auth.user} />
         <BrowserRouter>
-          <Route path="/">
+          <Route exact path="/">
             <Redirect to="/login" />
           </Route>
           <Route
             path="/login"
             render={props => <Login {...props} onLogin={this.login} />}
           />
-          <Route path="/home" component={MainArea} />
+          <Route exact path="/home" component={MainArea} />
         </BrowserRouter>
       </div>
     );

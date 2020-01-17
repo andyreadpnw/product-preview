@@ -24,7 +24,6 @@ class Login extends React.Component {
     api.auth.login(this.state.fields).then(res => {
       console.log(res.message);
       if (res.message === "Invalid username or password") {
-        console.log("Log in you taco");
         this.setState({
           loginError: true
         });
@@ -46,8 +45,10 @@ class Login extends React.Component {
     const { fields } = this.state;
     return (
       <div>
-        {this.state.error ? <h1>Try again...</h1> : null}
-        {this.state.loginError ? <h1>Try again...</h1> : null}
+        {this.state.error ? <h1>Connection Unsucessful</h1> : null}
+        {this.state.loginError ? (
+          <h1>Username or Password was incorrect</h1>
+        ) : null}
         <div className="ui form">
           <form onSubmit={this.handleSubmit}>
             <div className="ui field">

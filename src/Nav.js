@@ -29,7 +29,7 @@ export default class TopNav extends React.Component {
       <div>
         <Navbar color="faded" light toggleable color="info">
           <NavbarToggler right onClick={this.toggle} />
-          <NavbarBrand href="/">Product Preview</NavbarBrand>
+          <NavbarBrand href="/home">Product Preview</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>

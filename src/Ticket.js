@@ -411,15 +411,18 @@ export class Ticket extends Component {
             <p>Assigned: {this.state.assigned}</p>
             <p>CC: {this.state.cc}</p>
             <p>Date Requested: {this.state.due_date}</p>
-            <a href="" onClick={() => this.openEditModal()}>
+            <a href="javascript:void(0);" onClick={() => this.openEditModal()}>
               Edit
             </a>
             <br></br>
-            <a href="" onClick={() => this.closeModal()}>
+            <a href="javascript:void(0);" onClick={() => this.closeModal()}>
               Close
             </a>
             <br></br>
-            <a href="" onClick={() => this.deleteModal(this.state.logSelected)}>
+            <a
+              href="javascript:void(0);"
+              onClick={() => this.deleteModal(this.state.logSelected)}
+            >
               Delete
             </a>
           </div>
