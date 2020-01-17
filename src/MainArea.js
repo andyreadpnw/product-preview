@@ -4,6 +4,7 @@ import ProductCard from "./ProductCard";
 import PDP from "./PDP";
 import Ticket from "./Ticket";
 import Tickets from "./Tickets";
+import { api } from "./services/api";
 
 class MainArea extends Component {
   constructor(props) {
@@ -18,33 +19,48 @@ class MainArea extends Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/products")
-      .then(res => res.json())
-      .then(json => {
-        console.log(json);
-        this.setState(
-          {
-            productsArr: json.map(x => x)
-          },
-          () => {
-            console.log(this.state.productsArr);
-          }
-        );
-      });
+    console.log("DID MOUNT");
+    if (!localStorage.getItem("token")) {
+      console.log("NO TOKEN");
+      this.props.history.push("/login");
+    } else {
+      api.auth.getCurrentUser().then(user => {
+        console.log(user);
+        if (user.error) {
+          this.props.history.push("/login");
+        } else {
+          console.log("taco");
 
-    fetch("http://localhost:3000/product_logs")
-      .then(res => res.json())
-      .then(json => {
-        console.log(json);
-        this.setState(
-          {
-            ticketsArr: json.map(x => x)
-          },
-          () => {
-            console.log(this.state.ticketsArr);
-          }
-        );
+          fetch("http://localhost:3000/products")
+            .then(res => res.json())
+            .then(json => {
+              console.log(json);
+              this.setState(
+                {
+                  productsArr: json.map(x => x)
+                },
+                () => {
+                  console.log(this.state.productsArr);
+                }
+              );
+            });
+
+          fetch("http://localhost:3000/product_logs")
+            .then(res => res.json())
+            .then(json => {
+              console.log(json);
+              this.setState(
+                {
+                  ticketsArr: json.map(x => x)
+                },
+                () => {
+                  console.log(this.state.ticketsArr);
+                }
+              );
+            });
+        }
       });
+    }
   }
 
   removeProduct(id) {

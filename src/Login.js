@@ -4,13 +4,13 @@ import { api } from "./services/api";
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    // this.handleSubmit = this.handleSubmit.bind(this);
     this.state = {
       error: false,
       fields: {
         username: "",
         password: ""
-      }
+      },
+      loginError: false
     };
   }
 
@@ -22,9 +22,19 @@ class Login extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     api.auth.login(this.state.fields).then(res => {
-      if (!res.error) {
+      console.log(res.message);
+      if (res.message === "Invalid username or password") {
+        console.log("Log in you taco");
+        this.setState({
+          loginError: true
+        });
+      } else if (!res.error) {
+        this.setState({
+          loginError: false
+        });
         const updatedState = { ...this.state.auth, user: res };
         this.props.onLogin(res);
+        this.props.history.push("/home");
         console.log(this.state.error);
       } else {
         this.setState({ error: true });
@@ -37,6 +47,7 @@ class Login extends React.Component {
     return (
       <div>
         {this.state.error ? <h1>Try again...</h1> : null}
+        {this.state.loginError ? <h1>Try again...</h1> : null}
         <div className="ui form">
           <form onSubmit={this.handleSubmit}>
             <div className="ui field">
