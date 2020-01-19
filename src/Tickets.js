@@ -2,7 +2,14 @@ import React, { Component } from "react";
 import DataTable from "react-data-table-component";
 
 export class Tickets extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ticketsArr: 1
+    };
+  }
+
+  componentWillMount() {
     fetch("http://localhost:3000/product_logs")
       .then(res => res.json())
       .then(json => {
@@ -19,7 +26,7 @@ export class Tickets extends Component {
   }
 
   render() {
-    const data = this.props.data;
+    const data = this.state.ticketsArr;
 
     const columns = [
       {

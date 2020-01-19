@@ -13,8 +13,7 @@ class MainArea extends Component {
       productsArr: [{ id: 1 }],
       isProductClicked: false,
       isEmptyState: true,
-      ticketsArr: [{ id: 1 }],
-      allTicketsClicked: false
+      ticketsArr: [{ id: 1 }]
     };
   }
 
@@ -88,7 +87,7 @@ class MainArea extends Component {
       )
     });
   }
-
+  
   render() {
     let productCards = this.state.productsArr.map(product => {
       return (
@@ -111,12 +110,6 @@ class MainArea extends Component {
         <Row>
           {this.state.isProductClicked && (
             <Ticket
-              data={this.state.ticketsArr}
-              product={this.state.productsArr}
-            />
-          )}
-          {this.state.allTicketsClicked && (
-            <Tickets
               data={this.state.ticketsArr}
               product={this.state.productsArr}
             />

@@ -3,6 +3,7 @@ import "./App.css";
 import TopNav from "./Nav";
 import MainArea from "./MainArea";
 import Login from "./Login";
+import Tickets from "./Tickets";
 import Profile from "./Profile";
 import { api } from "./services/api";
 import { BrowserRouter, Route, Redirect } from "react-router-dom";
@@ -62,7 +63,15 @@ class App extends Component {
           <Route exact path="/home" component={MainArea} />
           <Route
             path="/userprofile"
-            render={props => <Profile {...props} currentUser={this.state.auth} />}
+            render={props => (
+              <Profile {...props} currentUser={this.state.auth} />
+            )}
+          />
+          <Route
+            path="/tickets"
+            render={props => (
+              <Tickets {...props} currentUser={this.state.auth} />
+            )}
           />
         </BrowserRouter>
       </div>

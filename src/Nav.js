@@ -15,14 +15,23 @@ export default class TopNav extends React.Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      allTicketsClicked: false
     };
+    this.enterTickets = this.enterTickets.bind(this);
   }
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
     });
   }
+
+  enterTickets() {
+    this.setState({
+      allTicketsClicked: !this.state.allTicketsClicked
+    });
+  }
+
   render() {
     // console.log(this.props.currentUser.user.user_id.username);
     let { username } = this.props.currentUser.user.user_id;
@@ -33,6 +42,15 @@ export default class TopNav extends React.Component {
           <NavbarBrand href="/home">Product Preview</NavbarBrand>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+              <NavItem>
+                <NavLink
+                  href="/tickets/"
+                  enterTickets={this.enterTickets}
+                  allTicketsClicked={this.state.allTicketsClicked}
+                >
+                  Product Logs
+                </NavLink>
+              </NavItem>
               <NavItem>
                 <NavLink href="/userprofile/">Welcome {username}</NavLink>
               </NavItem>

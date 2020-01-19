@@ -56,7 +56,7 @@ export class Profile extends Component {
         })
       }).then(function(resp) {
         if (Math.floor(resp.status / 200) === 1) {
-          console.log("Great ");
+          console.log("successful");
         } else {
           console.log("ERROR", resp);
         }

@@ -200,7 +200,7 @@ export class Ticket extends Component {
   };
 
   submitLog = id => {
-    console.log("submitted");
+    console.log(this.state.logSelected);
 
     if (this.state.logSelected !== 0) {
       console.log("PATCH");
