@@ -13,6 +13,7 @@ class ProductCard extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     let {
       id,
@@ -27,6 +28,7 @@ class ProductCard extends Component {
       fabrication,
       style_type
     } = this.props.product;
+    let deleteToggle = this.props.currentUser.user_id.user_group_id;
     return (
       <div>
         <Card
@@ -44,9 +46,14 @@ class ProductCard extends Component {
           <CardBlock>
             <CardTitle>{name}</CardTitle>
             <CardText>{product_copy}</CardText>
-            <Button color="danger" onClick={() => this.props.removeProduct(id)}>
-              Delete
-            </Button>
+            {deleteToggle === 1 && (
+              <Button
+                color="danger"
+                onClick={() => this.props.removeProduct(id)}
+              >
+                Delete
+              </Button>
+            )}
           </CardBlock>
         </Card>
       </div>

@@ -87,7 +87,7 @@ class MainArea extends Component {
       )
     });
   }
-  
+
   render() {
     let productCards = this.state.productsArr.map(product => {
       return (
@@ -98,6 +98,7 @@ class MainArea extends Component {
               enterProduct={this.enterProduct.bind(this)}
               removeProduct={this.removeProduct.bind(this)}
               product={product}
+              currentUser={this.props.currentUser}
             />
           )}
           {this.state.isProductClicked && <PDP product={product} />}

@@ -1,10 +1,28 @@
 import React, { Component } from "react";
 import { CSVReader } from "react-papaparse";
+import { api } from "./services/api";
 
 export class Profile extends Component {
   constructor(props) {
     super(props);
     this.fileInput = React.createRef();
+    this.state = {
+      username: null,
+      user_group_id: null,
+      newUsername: "Select a new Username",
+      newPass: "Select a new Password",
+      newUserGroupID: "Select the group ID"
+    };
+  }
+
+  componentDidMount() {
+    api.auth.getCurrentUser().then(user => {
+      this.setState({
+        username: user.user_id.username,
+        user_group_id: user.user_id.user_group_id
+      });
+    });
+    console.log(this.state.username);
   }
 
   handleReadCSV = data => {
@@ -72,16 +90,97 @@ export class Profile extends Component {
     this.fileInput.current.click();
   };
 
+  handleNewUserSubmit = () => {
+    fetch(`http://localhost:3000/users`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        username: this.state.newUsername,
+        pass: this.state.newPass,
+        user_group_id: this.state.newUserGroupID
+      })
+    }).then(function(resp) {
+      if (Math.floor(resp.status / 200) === 1) {
+        console.log("successful");
+      } else {
+        console.log("ERROR", resp);
+      }
+    });
+  };
+
+  updateUsernameValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      newUsername: newValue
+    });
+  };
+
+  updateUserGroupValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      newUserGroupID: newValue
+    });
+  };
+
+  updatePassValue = e => {
+    const newValue = e.target.value;
+    this.setState({
+      newPass: newValue
+    });
+  };
+
   render() {
+    let adminToggle = this.state.user_group_id;
     return (
       <div>
+        {this.state.username}
+        {this.state.user_group_id}
         <CSVReader
           onFileLoaded={this.handleReadCSV}
           inputRef={this.fileInput}
           style={{ display: "none" }}
           onError={this.handleOnError}
         />
-        <button onClick={this.handleImportOffer}>Import</button>
+        {adminToggle === 1 && (
+          <button onClick={this.handleImportOffer}>Import</button>
+        )}
+        {adminToggle === 1 && (
+          <button onClick={this.handleNewUserSubmit}>Create New User</button>
+        )}
+        {adminToggle === 1 && (
+          <input
+            type="text"
+            className="form-control"
+            value={this.state.newUsername}
+            name="username"
+            placeholder={this.state.newUsername}
+            onChange={this.updateUsernameValue}
+          />
+        )}
+        {adminToggle === 1 && (
+          <input
+            type="text"
+            className="form-control"
+            value={this.state.newUserGroupID}
+            name="groupID"
+            placeholder={this.state.newUserGroupID}
+            onChange={this.updateUserGroupValue}
+          />
+        )}
+        {adminToggle === 1 && (
+          <input
+            type="text"
+            className="form-control"
+            value={this.state.newPass}
+            name="pass"
+            placeholder={this.state.newPass}
+            onChange={this.updatePassValue}
+          />
+        )}
+        <button onClick={() => this.handleNewUserSubmit()}>Submit</button>
       </div>
     );
   }

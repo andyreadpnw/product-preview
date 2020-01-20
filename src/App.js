@@ -24,7 +24,6 @@ class App extends Component {
   componentDidMount() {
     const token = localStorage.getItem("token");
     if (token) {
-      console.log("there is a token");
       // make a request to the backend and find user
       api.auth.getCurrentUser().then(user => {
         console.log(user);
@@ -51,7 +50,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <TopNav currentUser={this.state.auth} />
         <BrowserRouter>
           <Route exact path="/">
             <Redirect to="/login" />
@@ -60,17 +58,32 @@ class App extends Component {
             path="/login"
             render={props => <Login {...props} onLogin={this.login} />}
           />
-          <Route exact path="/home" component={MainArea} />
+          <Route
+            exact
+            path="/home"
+            render={props => (
+              <div>
+                <TopNav logout={this.logout} />
+                <MainArea currentUser={this.state.auth.user}/>
+              </div>
+            )}
+          />
           <Route
             path="/userprofile"
             render={props => (
-              <Profile {...props} currentUser={this.state.auth} />
+              <div>
+                <TopNav logout={this.logout} />
+                <Profile {...props} currentUser={this.state.auth} />
+              </div>
             )}
           />
           <Route
             path="/tickets"
             render={props => (
-              <Tickets {...props} currentUser={this.state.auth} />
+              <div>
+                <TopNav logout={this.logout} />
+                <Tickets {...props} currentUser={this.state.auth} />
+              </div>
             )}
           />
         </BrowserRouter>

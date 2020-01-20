@@ -8,6 +8,7 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
+import { api } from "./services/api";
 
 export default class TopNav extends React.Component {
   constructor(props) {
@@ -16,9 +17,20 @@ export default class TopNav extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
-      allTicketsClicked: false
+      allTicketsClicked: false,
+      username: "login",
+      user_group_id: null
     };
     this.enterTickets = this.enterTickets.bind(this);
+  }
+
+  componentDidMount() {
+    api.auth.getCurrentUser().then(user => {
+      this.setState({
+        username: user.user_id.username,
+        user_group_id: user.user_id.user_group_id
+      });
+    });
   }
   toggle() {
     this.setState({
@@ -34,7 +46,7 @@ export default class TopNav extends React.Component {
 
   render() {
     // console.log(this.props.currentUser.user.user_id.username);
-    let { username } = this.props.currentUser.user.user_id;
+    // let { username } = this.props.currentUser.user.user_id;
     return (
       <div>
         <Navbar color="faded" light toggleable color="info">
@@ -52,11 +64,16 @@ export default class TopNav extends React.Component {
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="/userprofile/">Welcome {username}</NavLink>
+                <NavLink href="/userprofile/">
+                  Welcome {this.state.username}
+                </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink href="https://github.com/andyreadpnw">Github</NavLink>
               </NavItem>
+              <NavLink href="/login/" onClick={() => this.props.logout()}>
+                Sign Out
+              </NavLink>
             </Nav>
           </Collapse>
         </Navbar>
