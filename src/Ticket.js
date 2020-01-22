@@ -41,19 +41,21 @@ export class Ticket extends Component {
   }
 
   deleteTicket(id) {
-    console.log(id);
     this.setState({
       visible: false
     });
-    fetch("http://localhost:3000/product_logs" + "/" + id, {
+    fetch("http://localhost:3000/product_logs/" + id, {
       method: "delete"
     })
-      .then(response => response.json())
+      .then(resp => {
+        this.props.updateProductTickets();
+      })
       .then(json => console.log(json.message))
       .catch(err => {
         console.error(err);
       });
-    console.log("deleted");
+    console.log("Deleted Log");
+    this.closeEditModal();
   }
 
   closeEditModal() {
@@ -63,7 +65,6 @@ export class Ticket extends Component {
   }
 
   handleNewTicket() {
-    console.log(this.props.product[0].id);
     this.setState({
       editVisible: true,
       logSelected: 0,
@@ -97,12 +98,9 @@ export class Ticket extends Component {
 
   updateDivisionValue = e => {
     const newValue = e.target.value;
-    this.setState(
-      {
-        division: newValue
-      },
-      () => console.log(this.state.division)
-    );
+    this.setState({
+      division: newValue
+    });
   };
 
   updateSiteValue = e => {
@@ -182,13 +180,7 @@ export class Ticket extends Component {
     });
   };
 
-  handleClick = () => {
-    console.log("potato");
-  };
-
   handleRowClicked = row => {
-    console.log(`${row.id} was clicked!`);
-    console.log(`${row.log_body}`);
     this.setState({
       logSelected: row.id,
       status: row.status,
@@ -208,10 +200,7 @@ export class Ticket extends Component {
 
   submitLog = id => {
     if (this.state.logSelected !== 0) {
-      console.log("PATCH");
-      console.log("http://localhost:3000/product_logs" + "/" + id);
-
-      fetch("http://localhost:3000/product_logs" + "/" + id, {
+      fetch("http://localhost:3000/product_logs/" + id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -232,16 +221,14 @@ export class Ticket extends Component {
         })
       }).then(resp => {
         if (Math.floor(resp.status / 200) === 1) {
-          this.props.updateTickets();
+          this.props.updateProductTickets();
           this.closeEditModal();
+          console.log("Edited log successfully");
         } else {
           console.log("ERROR", resp);
         }
       });
-      console.log("here");
-      console.log(this.state.division);
     } else {
-      console.log("POST");
       fetch("http://localhost:3000/product_logs", {
         method: "POST",
         headers: {
@@ -270,9 +257,11 @@ export class Ticket extends Component {
           product_id: this.props.product[0].id,
           style_id: this.props.product[0].style_id
         })
-      }).then(function(resp) {
+      }).then(resp => {
         if (Math.floor(resp.status / 200) === 1) {
-          console.log("Great ");
+          console.log("New Product Log submitted");
+          this.props.updateProductTickets();
+          this.closeEditModal();
         } else {
           console.log("ERROR", resp);
         }
@@ -281,8 +270,6 @@ export class Ticket extends Component {
   };
 
   render() {
-    console.log(this.props.data);
-
     const data = this.state.data;
 
     const columns = [
@@ -368,26 +355,6 @@ export class Ticket extends Component {
         right: true
       }
     ];
-
-    const customStyles = {
-      rows: {
-        style: {
-          minHeight: "72px"
-        }
-      },
-      headCells: {
-        style: {
-          paddingLeft: "8px",
-          paddingRight: "8px"
-        }
-      },
-      cells: {
-        style: {
-          paddingLeft: "8px",
-          paddingRight: "8px"
-        }
-      }
-    };
 
     return (
       <div>

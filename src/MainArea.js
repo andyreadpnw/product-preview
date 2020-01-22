@@ -15,13 +15,11 @@ class MainArea extends Component {
       ticketsArr: [{ id: 1 }],
       productSelected: 0
     };
-    this.updateTickets = this.updateTickets.bind(this);
+    this.updateProductTickets = this.updateProductTickets.bind(this);
   }
 
   componentDidMount() {
-    console.log("DID MOUNT");
     if (!localStorage.getItem("token")) {
-      console.log("NO TOKEN");
       this.props.history.push("/login");
     } else {
       api.auth.getCurrentUser().then(user => {
@@ -29,7 +27,6 @@ class MainArea extends Component {
         if (user.error) {
           this.props.history.push("/login");
         } else {
-          console.log("taco");
           this.setState({
             productSelected: 0
           });
@@ -37,73 +34,55 @@ class MainArea extends Component {
           fetch("http://localhost:3000/products")
             .then(res => res.json())
             .then(json => {
-              console.log(json);
-              this.setState(
-                {
-                  productsArr: json.map(x => x)
-                },
-                () => {
-                  console.log(this.state.productsArr);
-                }
-              );
+              this.setState({
+                productsArr: json.map(x => x)
+              });
             });
 
           fetch("http://localhost:3000/product_logs")
             .then(res => res.json())
             .then(json => {
-              console.log(json);
-              this.setState(
-                {
-                  ticketsArr: json.map(x => x)
-                },
-                () => {
-                  console.log(this.state.ticketsArr);
-                }
-              );
+              this.setState({
+                ticketsArr: json.map(x => x)
+              });
             });
         }
       });
     }
   }
 
-  updateTickets() {
+  updateProductTickets() {
     fetch("http://localhost:3000/product_logs")
       .then(res => res.json())
-      .then(
-        json => {
-          console.log(json);
-          this.setState(
-            {
-              ticketsArr: json.map(x => x)
-            },
-            () => {
-              this.setState(
-                {
-                  ...this.state,
-                  productsArr: this.state.productsArr.filter(
-                    product => product.id === this.state.productSelected
-                  ),
-                  ticketsArr: this.state.ticketsArr.filter(
-                    productlog =>
-                      productlog.product.id === this.state.productSelected
-                  ),
-                  productSelected: this.state.productSelected
-                },
-                () => console.log(this.state.ticketsArr)
-              );
-            }
-          );
-        },
-        () => console.log(this.state.ticketsArr)
-      );
-    console.log(this.state.productSelected);
+      .then(json => {
+        this.setState(
+          {
+            ticketsArr: json.map(x => x)
+          },
+          () => {
+            this.setState({
+              ...this.state,
+              productsArr: this.state.productsArr.filter(
+                product => product.id === this.state.productSelected
+              ),
+              ticketsArr: this.state.ticketsArr.filter(
+                productlog =>
+                  productlog.product.id === this.state.productSelected
+              ),
+              productSelected: this.state.productSelected
+            });
+          }
+        );
+      });
   }
+
+
 
   removeProduct(id) {
     this.setState({
       productsArr: this.state.productsArr.filter(product => product.id !== id)
     });
-    fetch("http://localhost:3000/products" + "/" + id, {
+    fetch("http://localhost:3000/products/" + id, {
       method: "delete"
     })
       .then(response => response.json())
@@ -151,7 +130,7 @@ class MainArea extends Component {
             <Ticket
               data={this.state.ticketsArr}
               product={this.state.productsArr}
-              updateTickets={this.updateTickets}
+              updateProductTickets={this.updateProductTickets}
             />
           )}
         </Row>

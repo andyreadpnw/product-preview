@@ -10,23 +10,13 @@ import {
 import "./style.css";
 
 class ProductCard extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     let {
       id,
-      parent_id,
       name,
-      department,
-      style_id,
-      color_id,
       product_copy,
-      product_main_image,
-      fit,
-      fabrication,
-      style_type
+      product_main_image
     } = this.props.product;
     let deleteToggle = this.props.currentUser.user_id.user_group_id;
     return (

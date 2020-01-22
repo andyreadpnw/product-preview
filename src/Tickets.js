@@ -29,15 +29,9 @@ export class Tickets extends Component {
     fetch("http://localhost:3000/product_logs")
       .then(res => res.json())
       .then(json => {
-        console.log(json);
-        this.setState(
-          {
-            ticketsArr: json.map(x => x)
-          },
-          () => {
-            console.log(this.state.ticketsArr);
-          }
-        );
+        this.setState({
+          ticketsArr: json.map(x => x)
+        });
       });
   }
 
@@ -53,20 +47,23 @@ export class Tickets extends Component {
     });
   }
 
-  deleteModal(id) {
-    console.log(id);
+  deleteTicket(id) {
     this.setState({
       visible: false
     });
-    fetch("http://localhost:3000/product_logs" + "/" + id, {
+    fetch("http://localhost:3000/product_logs/" + id, {
       method: "delete"
     })
-      .then(response => response.json())
+      .then(resp => {
+        this.props.updateAllTickets();
+      })
       .then(json => console.log(json.message))
       .catch(err => {
         console.error(err);
       });
     console.log("deleted");
+    // this.updateAllTickets();
+    this.closeModal();
   }
 
   closeEditModal() {
@@ -75,23 +72,16 @@ export class Tickets extends Component {
     });
   }
 
-  handleNewTicket() {
-    this.setState({
-      editVisible: true,
-      logSelected: 0,
-      status: "none",
-      priority: "none",
-      issue_type: "none",
-      issue_class: "none",
-      site: "none",
-      division: "none",
-      environment: "none",
-      log_body: "none",
-      assigned: "none",
-      cc: "none",
-      due_date: "none"
-    });
+  updateAllTickets() {
+    fetch("http://localhost:3000/product_logs")
+      .then(res => res.json())
+      .then(json => {
+        this.setState({
+          ticketsArr: json.map(x => x)
+        });
+      });
   }
+
 
   openEditModal() {
     this.setState({
@@ -191,13 +181,7 @@ export class Tickets extends Component {
     });
   };
 
-  handleClick = () => {
-    console.log("potato");
-  };
-
   handleRowClicked = row => {
-    console.log(`${row.id} was clicked!`);
-    console.log(`${row.log_body}`);
     this.setState({
       logSelected: row.id,
       status: row.status,
@@ -218,9 +202,7 @@ export class Tickets extends Component {
   submitLog = id => {
     console.log(this.state.logSelected);
 
-    if (this.state.logSelected !== 0) {
-      console.log("PATCH");
-      fetch("http://localhost:3000/product_logs" + "/" + id, {
+      fetch("http://localhost:3000/product_logs/" + id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -239,52 +221,14 @@ export class Tickets extends Component {
           cc: this.state.cc,
           due_date: this.state.due_date
         })
-      }).then(function(resp) {
+      }).then(resp => {
         if (Math.floor(resp.status / 200) === 1) {
-          console.log("Great ");
+          this.updateAllTickets();
+          this.closeEditModal();
         } else {
           console.log("ERROR", resp);
         }
       });
-      console.log("here");
-    } else {
-      console.log("POST");
-      fetch("http://localhost:3000/product_logs", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          status: this.state.status,
-          priority: this.state.priority,
-          issue_type: this.state.issue_type,
-          issue_class: this.state.issue_class,
-          site: this.state.site,
-          division: this.state.division,
-          environment: this.state.environment,
-          log_body: this.state.log_body,
-          assigned: this.state.assigned,
-          cc: this.state.cc,
-          due_date: this.state.due_date,
-          color_id: this.props.product[0].color_id,
-          department: this.props.product[0].department,
-          fabrication: this.props.product[0].fabrication,
-          fit: this.props.product[0].fit,
-          name: this.props.product[0].name,
-          parent_id: this.props.product[0].parent_id,
-          product_copy: this.props.product[0].product_copy,
-          product_id: this.props.product[0].id,
-          style_id: this.props.product[0].style_id
-        })
-      }).then(function(resp) {
-        if (Math.floor(resp.status / 200) === 1) {
-          console.log("Great ");
-        } else {
-          console.log("ERROR", resp);
-        }
-      });
-    }
   };
 
   render() {
@@ -420,7 +364,7 @@ export class Tickets extends Component {
             <br></br>
             <a
               href="javascript:void(0);"
-              onClick={() => this.deleteModal(this.state.logSelected)}
+              onClick={() => this.deleteTicket(this.state.logSelected)}
             >
               Delete
             </a>
@@ -542,11 +486,6 @@ export class Tickets extends Component {
             </a>
           </div>
         </Modal>
-        <input
-          type="button"
-          value="Log a New Ticket"
-          onClick={() => this.handleNewTicket()}
-        />
       </div>
     );
   }

@@ -3,7 +3,6 @@ import React, { Component } from "react";
 export class PDP extends Component {
   render() {
     let {
-      id,
       parent_id,
       name,
       department,

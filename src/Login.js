@@ -31,7 +31,6 @@ class Login extends React.Component {
         this.setState({
           loginError: false
         });
-        const updatedState = { ...this.state.auth, user: res };
         this.props.onLogin(res);
 
         console.log(this.state.error);
