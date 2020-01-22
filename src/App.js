@@ -38,7 +38,7 @@ class App extends Component {
     const updatedState = { ...this.state.auth, user: data };
     localStorage.setItem("token", data.jwt);
     this.setState({ auth: updatedState }, () => {
-      console.log(this.state.auth.user.user.username);
+      window.location.href = "http://localhost:3001/home";
     });
   };
 
@@ -64,7 +64,7 @@ class App extends Component {
             render={props => (
               <div>
                 <TopNav logout={this.logout} />
-                <MainArea currentUser={this.state.auth.user}/>
+                <MainArea currentUser={this.state.auth.user} />
               </div>
             )}
           />

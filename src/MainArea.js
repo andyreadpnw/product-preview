@@ -3,7 +3,6 @@ import { Container, Row, Col } from "reactstrap";
 import ProductCard from "./ProductCard";
 import PDP from "./PDP";
 import Ticket from "./Ticket";
-import Tickets from "./Tickets";
 import { api } from "./services/api";
 
 class MainArea extends Component {

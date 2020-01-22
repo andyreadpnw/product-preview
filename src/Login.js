@@ -33,7 +33,7 @@ class Login extends React.Component {
         });
         const updatedState = { ...this.state.auth, user: res };
         this.props.onLogin(res);
-        this.props.history.push("/home");
+
         console.log(this.state.error);
       } else {
         this.setState({ error: true });
