@@ -207,9 +207,6 @@ export class Ticket extends Component {
   };
 
   submitLog = id => {
-    console.log(this.state.logSelected);
-    this.setState({});
-
     if (this.state.logSelected !== 0) {
       console.log("PATCH");
       console.log("http://localhost:3000/product_logs" + "/" + id);
@@ -236,6 +233,7 @@ export class Ticket extends Component {
       }).then(resp => {
         if (Math.floor(resp.status / 200) === 1) {
           this.props.updateTickets();
+          this.closeEditModal();
         } else {
           console.log("ERROR", resp);
         }

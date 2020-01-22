@@ -12,7 +12,8 @@ class MainArea extends Component {
       productsArr: [{ id: 1 }],
       isProductClicked: false,
       isEmptyState: true,
-      ticketsArr: [{ id: 1 }]
+      ticketsArr: [{ id: 1 }],
+      productSelected: 0
     };
     this.updateTickets = this.updateTickets.bind(this);
   }
@@ -29,6 +30,9 @@ class MainArea extends Component {
           this.props.history.push("/login");
         } else {
           console.log("taco");
+          this.setState({
+            productSelected: 0
+          });
 
           fetch("http://localhost:3000/products")
             .then(res => res.json())
@@ -65,18 +69,34 @@ class MainArea extends Component {
   updateTickets() {
     fetch("http://localhost:3000/product_logs")
       .then(res => res.json())
-      .then(json => {
-        console.log(json);
-        this.setState(
-          {
-            ticketsArr: json.map(x => x)
-          },
-          () => {
-            console.log(this.state.ticketsArr);
-          }
-        );
-      });
-    console.log("tickets updated");
+      .then(
+        json => {
+          console.log(json);
+          this.setState(
+            {
+              ticketsArr: json.map(x => x)
+            },
+            () => {
+              this.setState(
+                {
+                  ...this.state,
+                  productsArr: this.state.productsArr.filter(
+                    product => product.id === this.state.productSelected
+                  ),
+                  ticketsArr: this.state.ticketsArr.filter(
+                    productlog =>
+                      productlog.product.id === this.state.productSelected
+                  ),
+                  productSelected: this.state.productSelected
+                },
+                () => console.log(this.state.ticketsArr)
+              );
+            }
+          );
+        },
+        () => console.log(this.state.ticketsArr)
+      );
+    console.log(this.state.productSelected);
   }
 
   removeProduct(id) {
@@ -101,7 +121,8 @@ class MainArea extends Component {
       productsArr: this.state.productsArr.filter(product => product.id === id),
       ticketsArr: this.state.ticketsArr.filter(
         productlog => productlog.product.id === id
-      )
+      ),
+      productSelected: id
     });
   }
 
