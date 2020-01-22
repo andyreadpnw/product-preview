@@ -36,7 +36,7 @@ export class Ticket extends Component {
     });
   }
 
-  deleteModal(id) {
+  deleteTicket(id) {
     console.log(id);
     this.setState({
       visible: false
@@ -93,9 +93,12 @@ export class Ticket extends Component {
 
   updateDivisionValue = e => {
     const newValue = e.target.value;
-    this.setState({
-      division: newValue
-    });
+    this.setState(
+      {
+        division: newValue
+      },
+      () => console.log(this.state.division)
+    );
   };
 
   updateSiteValue = e => {
@@ -199,11 +202,16 @@ export class Ticket extends Component {
     this.openModal();
   };
 
+  // shouldComponentUpdate(nextProps, nextState) {}
+
   submitLog = id => {
     console.log(this.state.logSelected);
+    this.setState({});
 
     if (this.state.logSelected !== 0) {
       console.log("PATCH");
+      console.log("http://localhost:3000/product_logs" + "/" + id);
+
       fetch("http://localhost:3000/product_logs" + "/" + id, {
         method: "PATCH",
         headers: {
@@ -231,6 +239,7 @@ export class Ticket extends Component {
         }
       });
       console.log("here");
+      console.log(this.state.division);
     } else {
       console.log("POST");
       fetch("http://localhost:3000/product_logs", {
@@ -421,7 +430,7 @@ export class Ticket extends Component {
             <br></br>
             <a
               href="javascript:void(0);"
-              onClick={() => this.deleteModal(this.state.logSelected)}
+              onClick={() => this.deleteTicket(this.state.logSelected)}
             >
               Delete
             </a>

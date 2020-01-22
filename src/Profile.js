@@ -91,6 +91,11 @@ export class Profile extends Component {
   };
 
   handleNewUserSubmit = () => {
+    console.log({
+      username: this.state.newUsername,
+      password: this.state.newPass,
+      user_group_id: this.state.newUserGroupID
+    });
     fetch(`http://localhost:3000/users`, {
       method: "POST",
       headers: {
@@ -99,11 +104,12 @@ export class Profile extends Component {
       },
       body: JSON.stringify({
         username: this.state.newUsername,
-        pass: this.state.newPass,
+        password: this.state.newPass,
         user_group_id: this.state.newUserGroupID
       })
     }).then(function(resp) {
       if (Math.floor(resp.status / 200) === 1) {
+        console.log(resp);
         console.log("successful");
       } else {
         console.log("ERROR", resp);
