@@ -24,6 +24,10 @@ export class Ticket extends Component {
     };
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ data: nextProps.data });
+  }
+
   openModal() {
     this.setState({
       visible: true
@@ -202,8 +206,6 @@ export class Ticket extends Component {
     this.openModal();
   };
 
-  // shouldComponentUpdate(nextProps, nextState) {}
-
   submitLog = id => {
     console.log(this.state.logSelected);
     this.setState({});
@@ -231,9 +233,9 @@ export class Ticket extends Component {
           cc: this.state.cc,
           due_date: this.state.due_date
         })
-      }).then(function(resp) {
+      }).then(resp => {
         if (Math.floor(resp.status / 200) === 1) {
-          console.log("Great ");
+          this.props.updateTickets();
         } else {
           console.log("ERROR", resp);
         }
@@ -283,7 +285,7 @@ export class Ticket extends Component {
   render() {
     console.log(this.props.data);
 
-    const data = this.props.data;
+    const data = this.state.data;
 
     const columns = [
       {

@@ -14,6 +14,7 @@ class MainArea extends Component {
       isEmptyState: true,
       ticketsArr: [{ id: 1 }]
     };
+    this.updateTickets = this.updateTickets.bind(this);
   }
 
   componentDidMount() {
@@ -59,6 +60,23 @@ class MainArea extends Component {
         }
       });
     }
+  }
+
+  updateTickets() {
+    fetch("http://localhost:3000/product_logs")
+      .then(res => res.json())
+      .then(json => {
+        console.log(json);
+        this.setState(
+          {
+            ticketsArr: json.map(x => x)
+          },
+          () => {
+            console.log(this.state.ticketsArr);
+          }
+        );
+      });
+    console.log("tickets updated");
   }
 
   removeProduct(id) {
@@ -112,6 +130,7 @@ class MainArea extends Component {
             <Ticket
               data={this.state.ticketsArr}
               product={this.state.productsArr}
+              updateTickets={this.updateTickets}
             />
           )}
         </Row>

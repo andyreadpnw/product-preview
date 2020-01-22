@@ -13,6 +13,7 @@ export class Profile extends Component {
       newPass: "Select a new Password",
       newUserGroupID: "Select the group ID"
     };
+    // this.refreshLoginForm = this.refreshLoginForm.bind(this);
   }
 
   componentDidMount() {
@@ -107,13 +108,22 @@ export class Profile extends Component {
         password: this.state.newPass,
         user_group_id: this.state.newUserGroupID
       })
-    }).then(function(resp) {
+    }).then(resp => {
       if (Math.floor(resp.status / 200) === 1) {
         console.log(resp);
         console.log("successful");
+        this.refreshLoginForm();
       } else {
         console.log("ERROR", resp);
       }
+    });
+  };
+
+  refreshLoginForm = () => {
+    this.setState({
+      newUsername: "Select a new Username",
+      newPass: "Select a new Password",
+      newUserGroupID: "Select the group ID"
     });
   };
 
@@ -154,9 +164,6 @@ export class Profile extends Component {
           <button onClick={this.handleImportOffer}>Import</button>
         )}
         {adminToggle === 1 && (
-          <button onClick={this.handleNewUserSubmit}>Create New User</button>
-        )}
-        {adminToggle === 1 && (
           <input
             type="text"
             className="form-control"
@@ -186,7 +193,9 @@ export class Profile extends Component {
             onChange={this.updatePassValue}
           />
         )}
-        <button onClick={() => this.handleNewUserSubmit()}>Submit</button>
+        {adminToggle === 1 && (
+          <button onClick={() => this.handleNewUserSubmit()}>Submit</button>
+        )}
       </div>
     );
   }
