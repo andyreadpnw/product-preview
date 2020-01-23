@@ -54,10 +54,8 @@ class Login extends React.Component {
           <div className="container">
             <div className="auth-wrapper">
               <div className="auth-inner">
-                <form>
-                  <h3>Sign In</h3>
-
-                  <div className="form-group">
+                <form onSubmit={this.handleSubmit}>
+                  <div className="ui field">
                     <label>Username</label>
                     <input
                       name="username"
@@ -66,8 +64,7 @@ class Login extends React.Component {
                       onChange={this.handleChange}
                     />
                   </div>
-
-                  <div className="form-group">
+                  <div className="ui field">
                     <label>Password</label>
                     <input
                       name="password"
@@ -77,9 +74,8 @@ class Login extends React.Component {
                       onChange={this.handleChange}
                     />
                   </div>
-
-                  <button type="submit" className="btn btn-primary btn-block">
-                    Submit
+                  <button type="submit" className="ui basic green button">
+                    Login
                   </button>
                 </form>
               </div>
