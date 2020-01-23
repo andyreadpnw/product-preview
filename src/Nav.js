@@ -58,7 +58,7 @@ export default class TopNav extends React.Component {
                   enterTickets={this.enterTickets}
                   allTicketsClicked={this.state.allTicketsClicked}
                 >
-                  Product Logs
+                  Product Tickets
                 </NavLink>
               </NavItem>
               <NavItem>

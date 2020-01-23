@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import DataTable from "react-data-table-component";
 import Modal from "react-awesome-modal";
+import "./style.css";
 
 export class Tickets extends Component {
   constructor(props) {
@@ -81,7 +82,6 @@ export class Tickets extends Component {
         });
       });
   }
-
 
   openEditModal() {
     this.setState({
@@ -202,33 +202,33 @@ export class Tickets extends Component {
   submitLog = id => {
     console.log(this.state.logSelected);
 
-      fetch("http://localhost:3000/product_logs/" + id, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json"
-        },
-        body: JSON.stringify({
-          status: this.state.status,
-          priority: this.state.priority,
-          issue_type: this.state.issue_type,
-          issue_class: this.state.issue_class,
-          site: this.state.site,
-          division: this.state.division,
-          environment: this.state.environment,
-          log_body: this.state.log_body,
-          assigned: this.state.assigned,
-          cc: this.state.cc,
-          due_date: this.state.due_date
-        })
-      }).then(resp => {
-        if (Math.floor(resp.status / 200) === 1) {
-          this.updateAllTickets();
-          this.closeEditModal();
-        } else {
-          console.log("ERROR", resp);
-        }
-      });
+    fetch("http://localhost:3000/product_logs/" + id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        status: this.state.status,
+        priority: this.state.priority,
+        issue_type: this.state.issue_type,
+        issue_class: this.state.issue_class,
+        site: this.state.site,
+        division: this.state.division,
+        environment: this.state.environment,
+        log_body: this.state.log_body,
+        assigned: this.state.assigned,
+        cc: this.state.cc,
+        due_date: this.state.due_date
+      })
+    }).then(resp => {
+      if (Math.floor(resp.status / 200) === 1) {
+        this.updateAllTickets();
+        this.closeEditModal();
+      } else {
+        console.log("ERROR", resp);
+      }
+    });
   };
 
   render() {
@@ -239,7 +239,7 @@ export class Tickets extends Component {
         name: "ID",
         selector: "id",
         sortable: true,
-        width: "40px"
+        width: "50px"
       },
       {
         name: "Product ID",
@@ -252,7 +252,7 @@ export class Tickets extends Component {
         selector: "status",
         sortable: true,
         right: true,
-        width: "90px"
+        width: "120px"
       },
       {
         name: "Priority",
@@ -273,7 +273,7 @@ export class Tickets extends Component {
         selector: "issue_class",
         sortable: true,
         right: true,
-        width: "140px"
+        width: "170px"
       },
       {
         name: "Site",
@@ -294,7 +294,7 @@ export class Tickets extends Component {
         selector: "environment",
         sortable: true,
         right: true,
-        width: "90px"
+        width: "110px"
       },
       {
         name: "Action Request",
@@ -336,12 +336,11 @@ export class Tickets extends Component {
         />
         <Modal
           visible={this.state.visible}
-          width="400"
-          height="650"
           effect="fadeInUp"
+          id="modal1"
           onClickAway={() => this.closeModal()}
         >
-          <div>
+          <div id="tickets-edit">
             <p>ID: {this.state.logSelected}</p>
             <p>Status: {this.state.status}</p>
             <p>Priority: {this.state.priority}</p>
@@ -372,77 +371,79 @@ export class Tickets extends Component {
         </Modal>
         <Modal
           visible={this.state.editVisible}
-          width="400"
-          height="850"
           effect="fadeInUp"
+          id="modal2"
           onClickAway={() => this.closeEditModal()}
         >
-          <div>
+          <div id="tickets-edit">
             <h1>Log ID:{this.state.logSelected}</h1>
             Status:
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.status}
-              name="status"
-              placeholder={this.state.status}
-              onChange={this.updateStatusValue}
-            />
+            <select value={this.state.status} onChange={this.updateStatusValue}>
+              <option value="Active">Active</option>
+              <option value="In-Progress">In-Progress</option>
+              <option value="Complete">Complete</option>
+            </select>
+            <p></p>
             Priority:
-            <input
-              type="text"
-              className="form-control"
+            <select
               value={this.state.priority}
-              name="priority"
-              placeholder={this.state.priority}
               onChange={this.updatePriorityValue}
-            />
-            Issut Type:
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.issue_type}
-              name="issue_type"
-              placeholder={this.state.issue_type}
-              onChange={this.updateIssueTypeValue}
-            />
+            >
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+              <option value="Urgent">Urgent</option>
+            </select>
+            <p></p>
             Issue Class:
-            <input
-              type="text"
-              className="form-control"
+            <select
+              value={this.state.issue_type}
+              onChange={this.updateIssueTypeValue}
+            >
+              <option value="Product Data">Product Data</option>
+              <option value="Image Issue">Image Issue</option>
+              <option value="Incorrect Load">Incorrect Load</option>
+              <option value="Copy">Copy</option>
+            </select>
+            <p></p>
+            Issue Type:
+            <select
               value={this.state.issue_class}
-              name="issue_class"
-              placeholder={this.state.issue_class}
               onChange={this.updateIssueClassValue}
-            />
+            >
+              <option value="Prevent Load until Fixed">
+                Prevent Load until Fixed
+              </option>
+              <option value="Load but Correct ASAP">Incorrect Load</option>
+            </select>
+            <p></p>
             Site:
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.site}
-              name="site"
-              placeholder={this.state.site}
-              onChange={this.updateSiteValue}
-            />
+            <select value={this.state.site} onChange={this.updateSiteValue}>
+              <option value="US Site">US Site</option>
+              <option value="CA Site">CA Site</option>
+            </select>
+            <p></p>
             Division:
-            <input
-              type="text"
-              className="form-control"
+            <select
               value={this.state.division}
-              name="division"
-              placeholder={this.state.division}
               onChange={this.updateDivisionValue}
-            />
+            >
+              <option value="Ecomm">Ecomm</option>
+              <option value="Planner">Planner</option>
+              <option value="Merchant">Merchant</option>
+              <option value="PLM">Planner</option>
+            </select>
+            <p></p>
             Environment:
-            <input
-              type="text"
-              className="form-control"
+            <select
               value={this.state.environment}
-              name="environment"
-              placeholder={this.state.environment}
               onChange={this.updateEnvironmentValue}
-            />
-            Request:{" "}
+            >
+              <option value="Proofing">Proofing</option>
+              <option value="Product Live">Product Live</option>
+            </select>
+            <p></p>
+            Request:
             <input
               type="text"
               className="form-control"
@@ -451,24 +452,20 @@ export class Tickets extends Component {
               placeholder={this.state.log_body}
               onChange={this.updateLogBodyValue}
             />
+            <p></p>
             Assigned:
-            <input
-              type="text"
-              className="form-control"
+            <select
               value={this.state.assigned}
-              name="assigned"
-              placeholder={this.state.assigned}
               onChange={this.updateAssignedValue}
-            />
+            >
+              <option value="Andy Read">Andy Read</option>
+            </select>
+            <p></p>
             CC:
-            <input
-              type="text"
-              className="form-control"
-              value={this.state.cc}
-              name="cc"
-              placeholder={this.state.cc}
-              onChange={this.updateCCValue}
-            />
+            <select value={this.state.cc} onChange={this.updateCCValue}>
+              <option value="Andy Read">Andy Read</option>
+            </select>
+            <p></p>
             Due Date:
             <input
               type="text"
@@ -478,9 +475,11 @@ export class Tickets extends Component {
               placeholder={this.state.due_date}
               onChange={this.updateDueDateValue}
             />
+            <p></p>
             <button onClick={() => this.submitLog(this.state.logSelected)}>
               Submit
             </button>
+            <p></p>
             <a href="javascript:void(0);" onClick={() => this.closeEditModal()}>
               Close
             </a>

@@ -2,10 +2,12 @@ import React, { Component } from "react";
 import {
   Card,
   CardImg,
-  CardText,
   CardBlock,
   CardTitle,
-  Button
+  Button,
+  ListGroup,
+  ListGroupItem,
+  CardDeck
 } from "reactstrap";
 import "./style.css";
 
@@ -15,13 +17,17 @@ class ProductCard extends Component {
     let {
       id,
       name,
-      product_copy,
-      product_main_image
+      product_main_image,
+      parent_id,
+      department,
+      style_id
     } = this.props.product;
     let deleteToggle = this.props.currentUser.user_id.user_group_id;
     return (
       <div>
+      <CardDeck>
         <Card
+          bg="light"
           raised
           className="CardItem-main-card"
           onClick={() => this.props.enterProduct(id)}
@@ -35,7 +41,11 @@ class ProductCard extends Component {
           />
           <CardBlock>
             <CardTitle>{name}</CardTitle>
-            <CardText>{product_copy}</CardText>
+            <ListGroup className="list-group-flush">
+              <ListGroupItem>Product ID: {parent_id}</ListGroupItem>
+              <ListGroupItem>Department: {department}</ListGroupItem>
+              <ListGroupItem>Style ID: {style_id}</ListGroupItem>
+            </ListGroup>
             {deleteToggle === 1 && (
               <Button
                 color="danger"
@@ -46,7 +56,8 @@ class ProductCard extends Component {
             )}
           </CardBlock>
         </Card>
-      </div>
+      </CardDeck>
+    </div>
     );
   }
 }

@@ -152,17 +152,27 @@ export class Profile extends Component {
     let adminToggle = this.state.user_group_id;
     return (
       <div>
-        {this.state.username}
-        {this.state.user_group_id}
+        Username: {this.state.username}
+        <p></p>
+        User Group: {this.state.user_group_id}
+        <p></p>
         <CSVReader
           onFileLoaded={this.handleReadCSV}
           inputRef={this.fileInput}
           style={{ display: "none" }}
           onError={this.handleOnError}
         />
+        {adminToggle === 1 && <h2>Admin Only Actions:</h2>}
+        <p></p>
         {adminToggle === 1 && (
-          <button onClick={this.handleImportOffer}>Import</button>
+          <button onClick={this.handleImportOffer}>Import New Products</button>
         )}
+        <p></p>
+        <h5>Create a New User:</h5>
+        <span>
+          User groups to select: Admin(1), Ecomm(2), Merchant(3), PLM(4),
+          Read-Only(5)
+        </span>
         {adminToggle === 1 && (
           <input
             type="text"
@@ -173,6 +183,7 @@ export class Profile extends Component {
             onChange={this.updateUsernameValue}
           />
         )}
+        <p></p>
         {adminToggle === 1 && (
           <input
             type="text"
@@ -183,6 +194,7 @@ export class Profile extends Component {
             onChange={this.updateUserGroupValue}
           />
         )}
+        <p></p>
         {adminToggle === 1 && (
           <input
             type="text"
@@ -193,6 +205,7 @@ export class Profile extends Component {
             onChange={this.updatePassValue}
           />
         )}
+        <p></p>
         {adminToggle === 1 && (
           <button onClick={() => this.handleNewUserSubmit()}>Submit</button>
         )}

@@ -25,7 +25,7 @@ export class PDP extends Component {
         </header>
 
         <section>
-          <p>Summary Copy: {product_copy}</p>
+          <h5>Summary Copy: {product_copy}</h5>
           <li>Department: {department}</li>
           <li>Style ID: {style_id}</li>
           <li>Color ID: {color_id}</li>
