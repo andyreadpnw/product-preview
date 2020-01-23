@@ -1,5 +1,7 @@
 import React from "react";
 import { api } from "./services/api";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./App.css";
 
 class Login extends React.Component {
   constructor(props) {
@@ -48,32 +50,42 @@ class Login extends React.Component {
         {this.state.loginError ? (
           <h1>Username or Password was incorrect</h1>
         ) : null}
-        <div className="ui form">
-          <form onSubmit={this.handleSubmit}>
-            <div className="ui field">
-              <label>Username</label>
-              <input
-                name="username"
-                placeholder="username"
-                value={fields.username}
-                onChange={this.handleChange}
-              />
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+          <div className="container">
+            <div className="auth-wrapper">
+              <div className="auth-inner">
+                <form>
+                  <h3>Sign In</h3>
+
+                  <div className="form-group">
+                    <label>Username</label>
+                    <input
+                      name="username"
+                      placeholder="username"
+                      value={fields.username}
+                      onChange={this.handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Password</label>
+                    <input
+                      name="password"
+                      type="password"
+                      placeholder="password"
+                      value={fields.password}
+                      onChange={this.handleChange}
+                    />
+                  </div>
+
+                  <button type="submit" className="btn btn-primary btn-block">
+                    Submit
+                  </button>
+                </form>
+              </div>
             </div>
-            <div className="ui field">
-              <label>Password</label>
-              <input
-                name="password"
-                type="password"
-                placeholder="password"
-                value={fields.password}
-                onChange={this.handleChange}
-              />
-            </div>
-            <button type="submit" className="ui basic green button">
-              Login
-            </button>
-          </form>
-        </div>
+          </div>
+        </nav>
       </div>
     );
   }
