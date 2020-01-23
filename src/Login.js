@@ -54,6 +54,7 @@ class Login extends React.Component {
           <div className="container">
             <div className="auth-wrapper">
               <div className="auth-inner">
+                <h1>Product Preview</h1>
                 <form onSubmit={this.handleSubmit}>
                   <div className="ui field">
                     <label>Username</label>
