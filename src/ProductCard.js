@@ -12,7 +12,6 @@ import {
 import "./style.css";
 
 class ProductCard extends Component {
-
   render() {
     let {
       id,
@@ -25,39 +24,39 @@ class ProductCard extends Component {
     let deleteToggle = this.props.currentUser.user_id.user_group_id;
     return (
       <div>
-      <CardDeck>
-        <Card
-          bg="light"
-          raised
-          className="CardItem-main-card"
-          onClick={() => this.props.enterProduct(id)}
-        >
-          <CardImg
-            top
-            width="100%"
-            src={product_main_image}
-            alt="Card image cap"
-            className="ProductCard-img"
-          />
-          <CardBlock>
-            <CardTitle>{name}</CardTitle>
-            <ListGroup className="list-group-flush">
-              <ListGroupItem>Product ID: {parent_id}</ListGroupItem>
-              <ListGroupItem>Department: {department}</ListGroupItem>
-              <ListGroupItem>Style ID: {style_id}</ListGroupItem>
-            </ListGroup>
-            {deleteToggle === 1 && (
-              <Button
-                color="danger"
-                onClick={() => this.props.removeProduct(id)}
-              >
-                Delete
-              </Button>
-            )}
-          </CardBlock>
-        </Card>
-      </CardDeck>
-    </div>
+        <CardDeck>
+          <Card
+            bg="light"
+            raised
+            className="CardItem-main-card"
+            onClick={() => this.props.enterProduct(id)}
+          >
+            <CardImg
+              top
+              width="100%"
+              src={product_main_image}
+              alt="Card image cap"
+              className="ProductCard-img"
+            />
+            <CardBlock>
+              <CardTitle>{name}</CardTitle>
+              <ListGroup className="list-group-flush">
+                <ListGroupItem>Product ID: {parent_id}</ListGroupItem>
+                <ListGroupItem>Department: {department}</ListGroupItem>
+                <ListGroupItem>Style ID: {style_id}</ListGroupItem>
+              </ListGroup>
+              {deleteToggle === 1 && (
+                <Button
+                  color="danger"
+                  onClick={() => this.props.removeProduct(id)}
+                >
+                  Delete
+                </Button>
+              )}
+            </CardBlock>
+          </Card>
+        </CardDeck>
+      </div>
     );
   }
 }

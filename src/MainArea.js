@@ -13,9 +13,11 @@ class MainArea extends Component {
       isProductClicked: false,
       isEmptyState: true,
       ticketsArr: [{ id: 1 }],
+      approvalsArr: [{ id: 1 }],
       productSelected: 0
     };
     this.updateProductTickets = this.updateProductTickets.bind(this);
+    // this.updateApprovals = this.updateApprovals.bind(this);
   }
 
   componentDidMount() {
@@ -44,6 +46,14 @@ class MainArea extends Component {
             .then(json => {
               this.setState({
                 ticketsArr: json.map(x => x)
+              });
+            });
+
+          fetch("http://localhost:3000/approvals")
+            .then(res => res.json())
+            .then(json => {
+              this.setState({
+                approvalsArr: json.map(x => x)
               });
             });
         }
@@ -76,7 +86,29 @@ class MainArea extends Component {
       });
   }
 
-
+  updateAprrovals() {
+    fetch("http://localhost:3000/approvals")
+      .then(res => res.json())
+      .then(json => {
+        this.setState(
+          {
+            approvalsArr: json.map(x => x)
+          },
+          () => {
+            this.setState({
+              ...this.state,
+              productsArr: this.state.productsArr.filter(
+                product => product.id === this.state.productSelected
+              ),
+              approvalsArr: this.state.approvalsArr.filter(
+                approvals => approvals.product.id === this.state.productSelected
+              ),
+              productSelected: this.state.productSelected
+            });
+          }
+        );
+      });
+  }
 
   removeProduct(id) {
     this.setState({
@@ -101,6 +133,9 @@ class MainArea extends Component {
       ticketsArr: this.state.ticketsArr.filter(
         productlog => productlog.product.id === id
       ),
+      approvalsArr: this.state.approvalsArr.filter(
+        approvals => approvals.product.id === id
+      ),
       productSelected: id
     });
   }
@@ -118,7 +153,9 @@ class MainArea extends Component {
               currentUser={this.props.currentUser}
             />
           )}
-          {this.state.isProductClicked && <PDP product={product} />}
+          {this.state.isProductClicked && (
+            <PDP product={product} approvals={this.state.approvalsArr} />
+          )}
         </Col>
       );
     });
