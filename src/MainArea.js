@@ -17,7 +17,6 @@ class MainArea extends Component {
       productSelected: 0
     };
     this.updateProductTickets = this.updateProductTickets.bind(this);
-    // this.updateApprovals = this.updateApprovals.bind(this);
   }
 
   componentDidMount() {
@@ -86,7 +85,7 @@ class MainArea extends Component {
       });
   }
 
-  updateAprrovals() {
+  updateApprovals() {
     fetch("http://localhost:3000/approvals")
       .then(res => res.json())
       .then(json => {
@@ -154,7 +153,12 @@ class MainArea extends Component {
             />
           )}
           {this.state.isProductClicked && (
-            <PDP product={product} approvals={this.state.approvalsArr} />
+            <PDP
+              product={product}
+              approvals={this.state.approvalsArr}
+              updateApprovals={this.updateApprovals.bind(this)}
+              currentUser={this.props.currentUser}
+            />
           )}
         </Col>
       );
