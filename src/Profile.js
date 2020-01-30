@@ -76,6 +76,50 @@ export class Profile extends Component {
       }).then(function(resp) {
         if (Math.floor(resp.status / 200) === 1) {
           console.log("successful");
+          console.log(resp);
+          fetch("http://localhost:3000/products")
+            .then(res => res.json())
+            .then(json => {
+              console.log(json);
+              let lastId = Math.max(...json.map(s => s.id));
+              let startId = lastId - data.data.length + 2;
+              console.log(lastId);
+              console.log(startId);
+              let totalProducts = lastId - startId + 1;
+              for (let t = 0; t <= totalProducts; t++) {
+                fetch(`http://localhost:3000/approvals`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                  },
+                  body: JSON.stringify({
+                    ecomm_approve: "Incomplete",
+                    ecomm_approver: "Unassigned",
+                    ecomm_comment: "No Comments Yet",
+                    plm_approve: "Incomplete",
+                    plm_approver: "Unassigned",
+                    plm_comment: "No Comments Yet",
+                    merchant_approve: "Incomplete",
+                    merchant_approver: "Unassigned",
+                    merchant_comment: "No Comments Yet",
+                    planner_approve: "Incomplete",
+                    planner_approver: "Unassigned",
+                    planner_comment: "No Comments Yet",
+                    other_approve: "Incomplete",
+                    other_approver: "Unassigned",
+                    other_comment: "No Comments Yet",
+                    product_id: startId + t
+                  })
+                }).then(function(resp) {
+                  if (Math.floor(resp.status / 200) === 1) {
+                    console.log("successful");
+                  } else {
+                    console.log("ERROR", resp);
+                  }
+                });
+              }
+            });
         } else {
           console.log("ERROR", resp);
         }
