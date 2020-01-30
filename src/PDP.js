@@ -19,12 +19,31 @@ export class PDP extends Component {
       planner_comment: this.props.planner_comment,
       other_approve: this.props.other_approve,
       other_approver: this.props.other_approver,
-      other_comment: this.props.other_comment,
-      userGroup: "none"
+      other_comment: this.props.other_comment
     };
   }
 
-  componentDidMount() {}
+  componentWillReceiveProps(nextProps) {
+    console.log(this.props.approvals);
+    console.log(nextProps);
+    // this.setState({
+    //   ecomm_approve: this.props.approvals[0].ecomm_approve,
+    //   ecomm_approver: this.props.approvals[0].ecomm_approver,
+    //   ecomm_comment: this.props.approvals[0].ecomm_comment,
+    //   plm_approve: this.props.approvals[0].plm_approve,
+    //   plm_approver: this.props.approvals[0].plm_approver,
+    //   plm_comment: this.props.approvals[0].plm_comment,
+    //   merchant_approve: this.props.approvals[0].merchant_approve,
+    //   merchant_approver: this.props.approvals[0].merchant_approver,
+    //   merchant_comment: this.props.approvals[0].merchant_comment,
+    //   planner_approve: this.props.approvals[0].planner_approve,
+    //   planner_approver: this.props.approvals[0].planner_approver,
+    //   planner_comment: this.props.approvals[0].planner_comment,
+    //   other_approve: this.props.approvals[0].other_approve,
+    //   other_approver: this.props.approvals[0].other_approver,
+    //   other_comment: this.props.approvals[0].other_comment
+    // });
+  }
 
   updateApprovalValue = e => {
     const newValue = e.target.value;
@@ -213,7 +232,7 @@ export class PDP extends Component {
       })
     }).then(resp => {
       if (Math.floor(resp.status / 200) === 1) {
-        // this.props.updateApprovals();
+        this.props.updateApprovals();
         console.log("Edited log successfully");
       } else {
         console.log("ERROR", resp);
@@ -285,7 +304,7 @@ export class PDP extends Component {
             <Table striped>
               <thead>
                 <tr>
-                  <th>#</th>
+                  <th>Team</th>
                   <th>Approve</th>
                   <th>Approver</th>
                   <th>Comments</th>
