@@ -411,6 +411,7 @@ export class Ticket extends Component {
             <h1>Log ID:{this.state.logSelected}</h1>
             Status:
             <select value={this.state.status} onChange={this.updateStatusValue}>
+              <option value="none">Select</option>
               <option value="Active">Active</option>
               <option value="In-Progress">In-Progress</option>
               <option value="Complete">Complete</option>
@@ -421,6 +422,7 @@ export class Ticket extends Component {
               value={this.state.priority}
               onChange={this.updatePriorityValue}
             >
+              <option value="none">Select</option>
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>
@@ -432,6 +434,7 @@ export class Ticket extends Component {
               value={this.state.issue_type}
               onChange={this.updateIssueTypeValue}
             >
+              <option value="none">Select</option>
               <option value="Product Data">Product Data</option>
               <option value="Image Issue">Image Issue</option>
               <option value="Incorrect Load">Incorrect Load</option>
@@ -443,6 +446,7 @@ export class Ticket extends Component {
               value={this.state.issue_class}
               onChange={this.updateIssueClassValue}
             >
+              <option value="none">Select</option>
               <option value="Prevent Load until Fixed">
                 Prevent Load until Fixed
               </option>
@@ -451,6 +455,7 @@ export class Ticket extends Component {
             <p></p>
             Site:
             <select value={this.state.site} onChange={this.updateSiteValue}>
+              <option value="none">Select</option>
               <option value="US Site">US Site</option>
               <option value="CA Site">CA Site</option>
             </select>
@@ -460,6 +465,7 @@ export class Ticket extends Component {
               value={this.state.division}
               onChange={this.updateDivisionValue}
             >
+              <option value="none">Select</option>
               <option value="Ecomm">Ecomm</option>
               <option value="Planner">Planner</option>
               <option value="Merchant">Merchant</option>
@@ -471,6 +477,7 @@ export class Ticket extends Component {
               value={this.state.environment}
               onChange={this.updateEnvironmentValue}
             >
+              <option value="none">Select</option>
               <option value="Proofing">Proofing</option>
               <option value="Product Live">Product Live</option>
             </select>
@@ -490,12 +497,14 @@ export class Ticket extends Component {
               value={this.state.assigned}
               onChange={this.updateAssignedValue}
             >
+              <option value="none">Select</option>
               <option value="Select">Andy Read</option>
               <option value="Andy Read">Andy Read</option>
             </select>
             <p></p>
             CC:
             <select value={this.state.cc} onChange={this.updateCCValue}>
+              <option value="none">Select</option>
               <option value="Select">Andy Read</option>
               <option value="Andy Read">Andy Read</option>
             </select>

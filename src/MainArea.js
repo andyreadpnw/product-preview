@@ -123,6 +123,18 @@ class MainArea extends Component {
       });
   }
 
+  removeAllProducts() {
+    console.log("here");
+    fetch("http://localhost:3000/products", {
+      method: "delete"
+    })
+      .then(response => response.json())
+      .then(json => console.log(json.message))
+      .catch(err => {
+        console.error(err);
+      });
+  }
+
   enterProduct(id) {
     this.setState({
       ...this.state,
@@ -140,6 +152,7 @@ class MainArea extends Component {
   }
 
   render() {
+    let deleteToggle = this.props.currentUser.user_id.user_group_id;
     let productCards = this.state.productsArr.map(product => {
       return (
         <Col sm="4">
@@ -175,6 +188,9 @@ class MainArea extends Component {
             />
           )}
         </Row>
+        {deleteToggle === 1 && this.state.isEmptyState && (
+          <button onClick={this.removeAllProducts}>Delete All Products</button>
+        )}
       </Container>
     );
   }

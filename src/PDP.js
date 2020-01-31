@@ -330,6 +330,8 @@ export class PDP extends Component {
               <option value="In-Progress">In-Progress</option>
               <option value="Approved">Approved</option>
             </select>
+            <br></br>
+            Approver Comment:
             <input
               type="text"
               className="form-control"

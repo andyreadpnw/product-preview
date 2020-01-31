@@ -78,6 +78,20 @@ class Login extends React.Component {
                   <button type="submit" className="ui basic green button">
                     Login
                   </button>
+                  <div>
+                    <a>The username/passwords for demo purposes:</a>{" "}
+                    <a>username:Admin, password: pass</a>
+                    <br></br>
+                    <a>username: andy.read, password: pass</a>
+                    <br></br>
+                    <a>username: random.plm, password: pass</a>
+                    <br></br>
+                    <a>username: random.merchant, password: pass</a>
+                    <br></br>
+                    <a>username: random.planner, password: pass</a>
+                    <br></br>
+                    <a>username: random.other, password: pass</a>
+                  </div>
                 </form>
               </div>
             </div>

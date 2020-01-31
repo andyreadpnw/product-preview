@@ -13,7 +13,6 @@ export class Profile extends Component {
       newPass: "Select a new Password",
       newUserGroupID: "Select the group ID"
     };
-    // this.refreshLoginForm = this.refreshLoginForm.bind(this);
   }
 
   componentDidMount() {
@@ -212,11 +211,11 @@ export class Profile extends Component {
           <button onClick={this.handleImportOffer}>Import New Products</button>
         )}
         <p></p>
-        <h5>Create a New User:</h5>
-        <span>
-          User groups to select: Admin(1), Ecomm(2), Merchant(3), PLM(4),
-          Read-Only(5)
-        </span>
+        {adminToggle === 1 && (<h5>Create a New User:</h5>)}
+        {adminToggle === 1 && (<span>
+          User groups to select: Admin(1), Ecomm(2), PLM(3), Merchant(4),
+          Planner(5), Other(6)
+        </span>)}
         {adminToggle === 1 && (
           <input
             type="text"
