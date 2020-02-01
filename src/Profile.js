@@ -53,7 +53,7 @@ export class Profile extends Component {
         csv_product_load_id
       );
 
-      fetch(`http://localhost:3000/products`, {
+      fetch(`http://product-preview-backend.herokuapp.com/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export class Profile extends Component {
         if (Math.floor(resp.status / 200) === 1) {
           console.log("successful");
           console.log(resp);
-          fetch("http://localhost:3000/products")
+          fetch("http://product-preview-backend.herokuapp.com/products")
             .then(res => res.json())
             .then(json => {
               console.log(json);
@@ -86,31 +86,34 @@ export class Profile extends Component {
               console.log(startId);
               let totalProducts = lastId - startId + 1;
               for (let t = 0; t <= totalProducts; t++) {
-                fetch(`http://localhost:3000/approvals`, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json"
-                  },
-                  body: JSON.stringify({
-                    ecomm_approve: "Incomplete",
-                    ecomm_approver: "Unassigned",
-                    ecomm_comment: "No Comments Yet",
-                    plm_approve: "Incomplete",
-                    plm_approver: "Unassigned",
-                    plm_comment: "No Comments Yet",
-                    merchant_approve: "Incomplete",
-                    merchant_approver: "Unassigned",
-                    merchant_comment: "No Comments Yet",
-                    planner_approve: "Incomplete",
-                    planner_approver: "Unassigned",
-                    planner_comment: "No Comments Yet",
-                    other_approve: "Incomplete",
-                    other_approver: "Unassigned",
-                    other_comment: "No Comments Yet",
-                    product_id: startId + t
-                  })
-                }).then(function(resp) {
+                fetch(
+                  `http://product-preview-backend.herokuapp.com/approvals`,
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Accept: "application/json"
+                    },
+                    body: JSON.stringify({
+                      ecomm_approve: "Incomplete",
+                      ecomm_approver: "Unassigned",
+                      ecomm_comment: "No Comments Yet",
+                      plm_approve: "Incomplete",
+                      plm_approver: "Unassigned",
+                      plm_comment: "No Comments Yet",
+                      merchant_approve: "Incomplete",
+                      merchant_approver: "Unassigned",
+                      merchant_comment: "No Comments Yet",
+                      planner_approve: "Incomplete",
+                      planner_approver: "Unassigned",
+                      planner_comment: "No Comments Yet",
+                      other_approve: "Incomplete",
+                      other_approver: "Unassigned",
+                      other_comment: "No Comments Yet",
+                      product_id: startId + t
+                    })
+                  }
+                ).then(function(resp) {
                   if (Math.floor(resp.status / 200) === 1) {
                     console.log("successful");
                   } else {
@@ -140,7 +143,7 @@ export class Profile extends Component {
       password: this.state.newPass,
       user_group_id: this.state.newUserGroupID
     });
-    fetch(`http://localhost:3000/users`, {
+    fetch(`http://product-preview-backend.herokuapp.com/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -211,11 +214,13 @@ export class Profile extends Component {
           <button onClick={this.handleImportOffer}>Import New Products</button>
         )}
         <p></p>
-        {adminToggle === 1 && (<h5>Create a New User:</h5>)}
-        {adminToggle === 1 && (<span>
-          User groups to select: Admin(1), Ecomm(2), PLM(3), Merchant(4),
-          Planner(5), Other(6)
-        </span>)}
+        {adminToggle === 1 && <h5>Create a New User:</h5>}
+        {adminToggle === 1 && (
+          <span>
+            User groups to select: Admin(1), Ecomm(2), PLM(3), Merchant(4),
+            Planner(5), Other(6)
+          </span>
+        )}
         {adminToggle === 1 && (
           <input
             type="text"

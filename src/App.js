@@ -38,7 +38,7 @@ class App extends Component {
     const updatedState = { ...this.state.auth, user: data };
     localStorage.setItem("token", data.jwt);
     this.setState({ auth: updatedState }, () => {
-      window.location.href = "http://localhost:3001/home";
+      window.location.href = "http://localhost:3000/home";
     });
   };
 

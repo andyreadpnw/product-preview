@@ -2,6 +2,7 @@
   "name": "reactstrap-intro",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://myusername.github.io/my-app",
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "memoize-one": "^5.1.1",

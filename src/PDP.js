@@ -185,7 +185,7 @@ export class PDP extends Component {
     console.log(approverName);
     console.log(commentName);
 
-    fetch("http://localhost:3000/approvals/" + id, {
+    fetch("http://product-preview-backend.herokuapp.com/approvals/" + id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
