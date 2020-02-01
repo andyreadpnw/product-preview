@@ -1,8 +1,8 @@
 {
+  "homepage": "https://andyreadpnw.github.io/product-preview",
   "name": "reactstrap-intro",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://andyreadpnw.github.io/product-preview",
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "memoize-one": "^5.1.1",
@@ -24,9 +24,14 @@
     "styled-components": "^5.0.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "gh-pages": "^2.2.0"
   }
 }

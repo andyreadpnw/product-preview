@@ -51,6 +51,7 @@ class App extends Component {
     return (
       <div className="App">
         <BrowserRouter>
+          <App />
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>
