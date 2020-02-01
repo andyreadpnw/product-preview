@@ -32,7 +32,7 @@ class MainArea extends Component {
             productSelected: 0
           });
 
-          fetch("http://product-preview-backend.herokuapp.com/products")
+          fetch("https://product-preview-backend.herokuapp.com/products")
             .then(res => res.json())
             .then(json => {
               this.setState({
@@ -40,7 +40,7 @@ class MainArea extends Component {
               });
             });
 
-          fetch("http://product-preview-backend.herokuapp.com/product_logs")
+          fetch("https://product-preview-backend.herokuapp.com/product_logs")
             .then(res => res.json())
             .then(json => {
               this.setState({
@@ -48,7 +48,7 @@ class MainArea extends Component {
               });
             });
 
-          fetch("http://product-preview-backend.herokuapp.com/approvals")
+          fetch("https://product-preview-backend.herokuapp.com/approvals")
             .then(res => res.json())
             .then(json => {
               this.setState({
@@ -61,7 +61,7 @@ class MainArea extends Component {
   }
 
   updateProductTickets() {
-    fetch("http://product-preview-backend.herokuapp.com/product_logs")
+    fetch("https://product-preview-backend.herokuapp.com/product_logs")
       .then(res => res.json())
       .then(json => {
         this.setState(
@@ -86,7 +86,7 @@ class MainArea extends Component {
   }
 
   updateApprovals() {
-    fetch("http://product-preview-backend.herokuapp.com/approvals")
+    fetch("https://product-preview-backend.herokuapp.com/approvals")
       .then(res => res.json())
       .then(json => {
         this.setState(
@@ -113,7 +113,7 @@ class MainArea extends Component {
     this.setState({
       productsArr: this.state.productsArr.filter(product => product.id !== id)
     });
-    fetch("http://product-preview-backend.herokuapp.com/products/" + id, {
+    fetch("https://product-preview-backend.herokuapp.com/products/" + id, {
       method: "delete"
     })
       .then(response => response.json())
@@ -125,7 +125,7 @@ class MainArea extends Component {
 
   removeAllProducts() {
     console.log("here");
-    fetch("http://product-preview-backend.herokuapp.com/products", {
+    fetch("https://product-preview-backend.herokuapp.com/products", {
       method: "delete"
     })
       .then(response => response.json())

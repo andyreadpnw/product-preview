@@ -38,7 +38,8 @@ class App extends Component {
     const updatedState = { ...this.state.auth, user: data };
     localStorage.setItem("token", data.jwt);
     this.setState({ auth: updatedState }, () => {
-      window.location.href = "http://localhost:3000/home";
+      window.location.href =
+        "https://andyreadpnw.github.io/product-preview/home";
     });
   };
 
@@ -51,6 +52,7 @@ class App extends Component {
     return (
       <div className="App">
         <BrowserRouter basename={process.env.PUBLIC_URL}>
+          <App />
           <Route exact path="/">
             <Redirect to="/login" />
           </Route>

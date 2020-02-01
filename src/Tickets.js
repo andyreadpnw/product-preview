@@ -52,7 +52,7 @@ export class Tickets extends Component {
     this.setState({
       visible: false
     });
-    fetch("http://product-preview-backend.herokuapp.com/product_logs/" + id, {
+    fetch("https://product-preview-backend.herokuapp.com/product_logs/" + id, {
       method: "delete"
     })
       .then(resp => {
@@ -74,7 +74,7 @@ export class Tickets extends Component {
   }
 
   updateAllTickets() {
-    fetch("http://product-preview-backend.herokuapp.com/product_logs")
+    fetch("https://product-preview-backend.herokuapp.com/product_logs")
       .then(res => res.json())
       .then(json => {
         this.setState({
@@ -202,7 +202,7 @@ export class Tickets extends Component {
   submitLog = id => {
     console.log(this.state.logSelected);
 
-    fetch("http://product-preview-backend.herokuapp.com/product_logs/" + id, {
+    fetch("https://product-preview-backend.herokuapp.com/product_logs/" + id, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

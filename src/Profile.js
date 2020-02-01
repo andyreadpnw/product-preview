@@ -53,7 +53,7 @@ export class Profile extends Component {
         csv_product_load_id
       );
 
-      fetch(`http://product-preview-backend.herokuapp.com/products`, {
+      fetch(`https://product-preview-backend.herokuapp.com/products`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +76,7 @@ export class Profile extends Component {
         if (Math.floor(resp.status / 200) === 1) {
           console.log("successful");
           console.log(resp);
-          fetch("http://product-preview-backend.herokuapp.com/products")
+          fetch("https://product-preview-backend.herokuapp.com/products")
             .then(res => res.json())
             .then(json => {
               console.log(json);
@@ -87,7 +87,7 @@ export class Profile extends Component {
               let totalProducts = lastId - startId + 1;
               for (let t = 0; t <= totalProducts; t++) {
                 fetch(
-                  `http://product-preview-backend.herokuapp.com/approvals`,
+                  `https://product-preview-backend.herokuapp.com/approvals`,
                   {
                     method: "POST",
                     headers: {
@@ -143,7 +143,7 @@ export class Profile extends Component {
       password: this.state.newPass,
       user_group_id: this.state.newUserGroupID
     });
-    fetch(`http://product-preview-backend.herokuapp.com/users`, {
+    fetch(`https://product-preview-backend.herokuapp.com/users`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

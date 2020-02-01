@@ -45,7 +45,7 @@ export class Ticket extends Component {
     this.setState({
       visible: false
     });
-    fetch("http://product-preview-backend.herokuapp.com/product_logs/" + id, {
+    fetch("https://product-preview-backend.herokuapp.com/product_logs/" + id, {
       method: "delete"
     })
       .then(resp => {
@@ -201,7 +201,7 @@ export class Ticket extends Component {
 
   submitLog = id => {
     if (this.state.logSelected !== 0) {
-      fetch("http://product-preview-backend.herokuapp.com/product_logs/" + id, {
+      fetch("https://product-preview-backend.herokuapp.com/product_logs/" + id, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -230,7 +230,7 @@ export class Ticket extends Component {
         }
       });
     } else {
-      fetch("http://product-preview-backend.herokuapp.com/product_logs", {
+      fetch("https://product-preview-backend.herokuapp.com/product_logs", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
