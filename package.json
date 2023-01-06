@@ -17,7 +17,7 @@
     "react-dom": "^16.12.0",
     "react-papaparse": "^1.0.5",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "1.0.12",
+    "react-scripts": "5.0.1",
     "react-table": "^7.0.0-rc.15",
     "reactjs-popup": "^1.5.0",
     "reactstrap": "^4.8.0",
